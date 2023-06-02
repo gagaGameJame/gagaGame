@@ -55,7 +55,9 @@ let d2 = [];
 let score = 0;
 let karla, karlaBold;
 let mult = 0.25;
-
+let cat;
+let catLeft = 0;
+let catTop = 0;
 
 function preload() {
 
@@ -87,9 +89,40 @@ function setup() {
     });
   
 }
+function keyReleased() {
+  // press space to start game
+  if (keyCode === 32 && sceneCounter === 0) {
+    sceneCounter = 1;
+  }
+}
+
+// function keyIsDown(key) {
+//   let moveLeft = 0;
+//   let moveTop = 0;
+//   switch(key){
+//     case 37:
+//       // arrow left
+//       moveLeft = -1;
+//       break;
+//     case 39:
+//       // arrow right
+//       moveLeft = 1;
+//       break;
+//     case 38:
+//       // arrow top
+//       moveTop = -1;
+//       break;
+//     case 40:
+//       // arrow down
+//       moveTop = 1;
+//       break;
+//   }
+//   this.catLeft += moveLeft;
+//   this.catTop += moveTop;
+//   this.cat = square(this.catLeft,this.catTop,55);
+// }
 
 function draw() {
-
   switch (sceneCounter) {
     case 0:
       scene1.show();
@@ -136,23 +169,13 @@ class Scene1 {
   }
 
   show() {
-    background(0);
-    noStroke();
-    ground.show();
-    hole.show();
-    rocks.show();
-    grass.show();
-    ripples.show();
-    trees.show();
-    rain.show();
-    push();
-    imageMode(CENTER)
-    image(this.vignette, width / 2, height / 2, width * 3, height * 3);
-    pop();
-    intro.show();
-    startButton.show();
-    soundOn.position(width - 100, 40);
-    soundOn.mousePressed(togglePlaying);
+    background(255);
+    textSize(32);
+    text('homepage', 500, 300);
+    fill(0, 102, 153);
+    textSize(16);
+    text('press \'space\' to start game', 500, 400);
+    fill(0, 102, 153);
   }
 }
 
@@ -188,42 +211,31 @@ class Scene2 {
   }
 
   show() {
-
-    background(0);
+    clear();
     noStroke();
-    push();
-    translate(camX, camY);
-    ground.show();
-    hole.show();
-    rocks.show();
-    grass.show();
-    if (score < 5) {
-      ripples.show();
+    cat = square(catLeft, catTop, 100);
+    describe('white square with black outline in mid-right of canvas');
+    let moveLeft = 0;
+    let moveTop = 0;
+    if(keyIsDown(37)) {
+      // press arrow left
+      moveLeft = -5;
     }
-    identity.show();
-    pop();
-    player.show();
-    push();
-    translate(camX, camY);
-    trees.show();
-    pop();
-    rain.show();
-    moveCamera();
-    homeButton.show();
-
-    // Update torchlight
-    push();
-    imageMode(CENTER)
-    image(this.vignette, mouseX, mouseY, width * 3 * (score + 1), height * 3 * (score + 1));
-    pop();
-
-    checkCollision();
-    showScore();
-    soundOn.position(width - 100, 40);
-    soundOn.mousePressed(togglePlaying);
-    vignetteSize = 400 - (score * 100);
-    winState.show();
-
+    if(keyIsDown(39)) {
+      // press arrow right
+      moveLeft = 5;
+    }
+    if(keyIsDown(38)) {
+      // press arrow top
+      moveTop = -5;
+    }
+    if(keyIsDown(40)) {
+      // press arrow down
+      moveTop = 5;
+    }
+    catLeft = catLeft + moveLeft;
+    catTop = catTop + moveTop;
+    cat = square(catLeft,catTop,100);
   }
 }
 
