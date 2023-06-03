@@ -76,17 +76,6 @@ function setup() {
   scene1 = new Scene1();
   scene2 = new Scene2();
   scene3 = new Scene3();
-  soundOn = createImg("data/sound-off.png", "Sound on button",
-  '',
-  () => {
-    soundOn.size(50, AUTO);
-  });
-  soundOff = createImg("data/sound-on.png", "Sound off button",
-    '',
-    () => {
-      soundOff.size(50, AUTO);
-    });
-
 }
 function keyReleased() {
   // press space to start game
@@ -166,7 +155,6 @@ class Scene1 {
     imageMode(CENTER)
     pop();
     intro.show();
-    soundOn.position(width - 100, 40);
   }
 }
 
@@ -200,7 +188,6 @@ class Scene2 {
     pop();
     cat = square(catLeft, catTop, 100);
     // describe('white square with black outline in mid-right of canvas');
-
     let moveLeft = 0;
     let moveTop = 0;
     if(keyIsDown(37)) {
@@ -342,14 +329,27 @@ class WinState {
   }
 }
 
+
 function bgmStart() {
   isSoundOn = true;
   rainSound.loop();
+  $("img[alt$='Sound on button']").remove()
+  $("img[alt$='Sound off button']").remove()
+  soundOn = createImg("data/sound-on.png", "Sound on button", '', () => {
+    soundOn.size(50, AUTO);
+  });
+  soundOn.position(width - 100, 40);
 }
 
 function  bgmEnd() {
   isSoundOn = false;
   rainSound.pause();
+  $("img[alt$='Sound on button']").remove()
+  $("img[alt$='Sound off button']").remove()
+  soundOn = createImg("data/sound-off.png", "Sound off button", '', () => {
+    soundOn.size(50, AUTO);
+  });
+  soundOn.position(width - 100, 40);
 }
 function togglePlaying() {
   if (isSoundOn) {
