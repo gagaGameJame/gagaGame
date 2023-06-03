@@ -6,7 +6,7 @@ let scene1, scene2, winState, scene3;
 let gameoverState = false;
 let sceneCounter = 0;
 let intro, introText;
-let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood;
+let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat;
 let bgImg;
 let moveX = 0;
 let moveY = 0;
@@ -45,7 +45,7 @@ let sampleIsLooping = false;
 let winIsLooping = false;
 let birdsIsLooping = false;
 let gameoverSoundIsLooping = false;
-let soundOff, soundOn;
+let soundOn;
 let margin;
 let dx, dy, targetX, targetY;
 let d = [];
@@ -53,13 +53,8 @@ let d2 = [];
 let score = 0;
 let karla, karlaBold;
 let mult = 0.25;
-let cat;
-let catWidth = 100;
-let catHeight = 100;
-let catLeft = 0;
-let catTop = tileHeight/2 - catHeight/2;
 let isSoundOn = false;
-let catImage;
+// let catImage;
 let rug;
 let tape;
 let canFood1;
@@ -97,10 +92,10 @@ function keyReleased() {
   // press esc to exit
   if (keyCode === 27) {
     sceneCounter = 0;
-    catWidth = 100;
-    catHeight = 100;
-    catLeft = 0;
-    catTop = tileHeight/2 - catHeight/2;;
+    // catWidth = 100;
+    // catHeight = 100;
+    // catLeft = 0;
+    // catTop = tileHeight/2 - catHeight/2;;
     bgmEnd()
   }
 
@@ -191,6 +186,7 @@ class Scene2 {
     winState = new WinState();
     hole = new Hole();
     canFood = new CanFood(0.2);
+    cat = new Cat();
   }
 
   show() {
@@ -203,32 +199,7 @@ class Scene2 {
     pop();
 
     canFood.show();
-    // $("img[alt$='cat']").remove();
-    // catImage = createImg('data/cat.jpeg','cat');
-    let moveLeft = 1;
-    let moveTop = 0;
-    let adjustSize = 0;
-    if(keyIsDown(37)) {
-      // press arrow left
-      adjustSize = -20;
-    }
-    if(keyIsDown(39)) {
-      // press arrow right
-      adjustSize = 20;
-    }
-    if(keyIsDown(38)) {
-      // press arrow top
-      moveTop = -5;
-    }
-    if(keyIsDown(40)) {
-      // press arrow down
-      moveTop = 5;
-    }
-    catLeft += moveLeft;
-    catWidth = constrain(catWidth + adjustSize,40,160);
-    catHeight = constrain(catHeight + adjustSize,40,160);
-    catTop = constrain(catTop + moveTop,60,tileHeight - catHeight - 100);
-    image(spikeCat, catLeft, catTop, catWidth, catHeight, 0, 0, spikeCat.width, spikeCat.width);
+    cat.show();
   }
 }
 

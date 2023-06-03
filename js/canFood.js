@@ -20,7 +20,6 @@ class CanFood {
     }
 
     show() {
-        console.log(this.offsetX.length, this.offsetX[this.offsetX.length - 1].length)
         const canWidth = canFood1.width
         const canHeight = canFood1.height
         const canScaleSize = 0.4
