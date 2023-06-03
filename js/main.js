@@ -58,8 +58,12 @@ let isSoundOn = false;
 let rug;
 let tape;
 let canFood1;
-let spikeCat;
+let spikeCat
 let cameraX = 0;
+let cat_x = 0,
+  cat_y = 0;
+const canFoodPositions = [];
+const eatPositions = [];
 
 function preload() {
 
@@ -87,7 +91,7 @@ function keyReleased() {
   // press space to start game
   if (keyCode === 32 && sceneCounter === 0) {
     sceneCounter = 1;
-    bgmStart()
+    // bgmStart()
   }
 
   // press esc to exit
@@ -182,7 +186,7 @@ class Scene2 {
     birds = new Birds();
     winState = new WinState();
     hole = new Hole();
-    canFood = new CanFood(0.2);
+    canFood = new CanFood(0.6);
     cat = new Cat();
   }
 
@@ -196,8 +200,8 @@ class Scene2 {
     noSmooth();
     pop();
 
-    canFood.show();
     cat.show(moveX);
+    canFood.show();
   }
 }
 
@@ -350,28 +354,6 @@ function togglePlaying() {
 function moveCamera() {
   cameraX = cameraX - moveX;
   translate(cameraX,0);
-}
-
-function checkCollision() {
-
-  for (let i = 0; i < 5; i++) {
-    d[i] = dist((camX - player.px) * -1, (camY - player.py) * -1, identity.px[i] + identity.offX[i],
-      (((identity.py[i] + identity.offY[i]) * persp)) + ((height / 2) * persp) / 2);
-    if (d[i] < 80) {
-      player.c = identity.c[i];
-      identity.collided[i] = true;
-      scoreSound.play();
-
-    }
-  }
-
-  for (let j = 0; j < hole.holes.length; j++) {
-    d2[j] = dist((camX - player.px) * -1, (camY - player.py) * -1, hole.holes[j].px, hole.holes[j].py);
-    if (d2[j] < 50) {
-      gameoverState = true;
-      sceneCounter = 2;
-    }
-  }
 }
 
 function showScore() {
