@@ -40,7 +40,7 @@ let tilesList1;
 let threshold = 0.4;
 let blendThreshold = 0.05;
 let darkest = 200;
-let rainSound, scoreSound, winSound, gameoverSound, birdsSound;
+let bgmSound, scoreSound, winSound, gameoverSound, birdsSound;
 let sampleIsLooping = false;
 let winIsLooping = false;
 let birdsIsLooping = false;
@@ -65,7 +65,7 @@ let tape;
 
 function preload() {
 
-  rainSound = loadSound('data/rain.wav');
+  bgmSound = loadSound('data/bgm.mp3');
   scoreSound = loadSound('data/score.wav');
   winSound = loadSound('data/win.wav');
   gameoverSound = loadSound('data/gameover.wav');
@@ -351,7 +351,7 @@ class WinState {
       this.counter++;
 
       if (sampleIsLooping) {
-        rainSound.stop();
+        bgmSound.stop();
         sampleIsLooping = false;
         if (!birdsIsLooping) {
           birdsSound.loop();
@@ -369,7 +369,7 @@ class WinState {
 
 function bgmStart() {
   isSoundOn = true;
-  rainSound.loop();
+  bgmSound.loop();
   $("img[alt$='Sound on button']").remove()
   $("img[alt$='Sound off button']").remove()
   soundOn = createImg("data/sound-on.png", "Sound on button", '', () => {
@@ -380,7 +380,7 @@ function bgmStart() {
 
 function  bgmEnd() {
   isSoundOn = false;
-  rainSound.pause();
+  bgmSound.pause();
   $("img[alt$='Sound on button']").remove()
   $("img[alt$='Sound off button']").remove()
   soundOn = createImg("data/sound-off.png", "Sound off button", '', () => {
@@ -394,32 +394,6 @@ function togglePlaying() {
   } else {
     bgmStart();
   }
-
-  // if (!sampleIsLooping) {
-  //   console.log('==================')
-  //   rainSound.loop();
-  //   sampleIsLooping = true;
-  //   removeElements();
-  //   soundOff = createImg("data/sound-on.png", "Sound off button",
-  //   '',
-  //   () => {
-  //     soundOff.size(50, AUTO);
-  //   });
-  //   soundOff.position(width - 100, 40);
-  //   // soundOff.mousePressed(togglePlaying);
-  //
-  // } else {
-  //   rainSound.pause();
-  //   sampleIsLooping = false;
-  //   removeElements();
-  //   soundOn = createImg("data/sound-off.png", "Sound on button",
-  //   '',
-  //   () => {
-  //     soundOn.size(50, AUTO);
-  //   });
-  //   soundOn.position(width - 100, 40);
-  //   // soundOn.mousePressed(togglePlaying);
-  // }
 }
 
 // Click to move around the map
