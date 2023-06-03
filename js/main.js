@@ -54,12 +54,12 @@ let score = 0;
 let karla, karlaBold;
 let mult = 0.25;
 let cat;
-let catLeft = 0;
-let catTop = 0;
-let isSoundOn = false;
-let catImage;
 let catWidth = 100;
 let catHeight = 100;
+let catLeft = 0;
+let catTop = tileHeight/2 - catHeight/2;
+let isSoundOn = false;
+let catImage;
 let rug;
 let tape;
 let canFood1;
@@ -97,6 +97,11 @@ function keyReleased() {
   // press esc to exit
   if (keyCode === 27) {
     sceneCounter = 0;
+    catImage.remove();
+    catWidth = 100;
+    catHeight = 100;
+    catLeft = 0;
+    catTop = tileHeight/2 - catHeight/2;;
     bgmEnd()
   }
 
@@ -129,32 +134,6 @@ function setupBackGround() {
     image(tape, i * tapeWidth, margin + rugHeight, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
   }
 }
-
-// function keyIsDown(key) {
-//   let moveLeft = 0;
-//   let moveTop = 0;
-//   switch(key){
-//     case 37:
-//       // arrow left
-//       moveLeft = -1;
-//       break;
-//     case 39:
-//       // arrow right
-//       moveLeft = 1;
-//       break;
-//     case 38:
-//       // arrow top
-//       moveTop = -1;
-//       break;
-//     case 40:
-//       // arrow down
-//       moveTop = 1;
-//       break;
-//   }
-//   this.catLeft += moveLeft;
-//   this.catTop += moveTop;
-//   this.cat = square(this.catLeft,this.catTop,55);
-// }
 
 function draw() {
   switch (sceneCounter) {
@@ -227,20 +206,16 @@ class Scene2 {
     canFood.show();
     // $("img[alt$='cat']").remove();
     // catImage = createImg('data/cat.jpeg','cat');
-    // catImage.size(catWidth,catHeight);
-    // catImage.position(catLeft,catTop);
     let moveLeft = 1;
     let moveTop = 0;
+    let adjustSize = 0;
     if(keyIsDown(37)) {
-      catWidth-=20
-      catHeight-=20
-      // catImage.size(catWidth-=20,catHeight-=20);
+      // press arrow left
+      adjustSize = -20;
     }
     if(keyIsDown(39)) {
       // press arrow right
-      catWidth+=20
-      catHeight+=20
-      // catImage.size(catWidth+=20,catHeight+=20);
+      adjustSize = 20;
     }
     if(keyIsDown(38)) {
       // press arrow top
@@ -251,10 +226,10 @@ class Scene2 {
       moveTop = 5;
     }
     catLeft += moveLeft;
-    catTop += moveTop;
-
+    catWidth = constrain(catWidth + adjustSize,40,160);
+    catHeight = constrain(catHeight + adjustSize,40,160);
+    catTop = constrain(catTop + moveTop,60,tileHeight - catHeight - 100);
     image(spikeCat, catLeft, catTop, catWidth, catHeight, 0, 0, spikeCat.width, spikeCat.width);
-    // catImage.position(catLeft,catTop);
   }
 }
 
