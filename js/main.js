@@ -97,7 +97,6 @@ function keyReleased() {
   // press esc to exit
   if (keyCode === 27) {
     sceneCounter = 0;
-    catImage.remove();
     catWidth = 100;
     catHeight = 100;
     catLeft = 0;
