@@ -61,6 +61,7 @@ let catImage;
 let catWidth = 100;
 let catHeight = 100;
 let rug;
+let tape;
 
 function preload() {
 
@@ -73,6 +74,7 @@ function preload() {
   karlaBold = loadFont('data/Karla-Bold.ttf');
   // catImage = loadImage('data/cat.jpeg');
   rug = loadImage('data/rug.png')
+  tape = loadImage('data/tape.png')
 }
 
 function setup() {
@@ -92,6 +94,7 @@ function keyReleased() {
   // press esc to exit
   if (keyCode === 27) {
     sceneCounter = 0;
+    bgmEnd()
   }
 
   // press a to toggle sound
@@ -102,14 +105,25 @@ function keyReleased() {
 
 function setupBackGround() {
   const viewHeight = document.body.clientHeight;
-  const scaleRate = 0.4
-  const imgWidth = rug.width
-  const imgHeight = rug.height
-  const rugWidth = imgWidth * scaleRate
-  const rugHeight = imgHeight * scaleRate
+  const rugImgWidth = rug.width
+  const rugImgHeight = rug.height
+  const tapeWidth = tape.width
+  const tapeHeight = tape.height
+
+  const scaleRate = (viewHeight - tapeHeight * 2) / rugImgHeight
+  const rugWidth = rugImgWidth * scaleRate
+  const rugHeight = rugImgHeight * scaleRate
+
   const margin = (viewHeight - rugHeight) / 2
-  for (let i = 0; i < mapSize; i++) {
-    image(rug, i * rugWidth, margin, rugWidth, rugHeight, 0, 0, imgWidth, imgHeight);
+  const rugSize = worldWidth % rugWidth + 1
+  for (let i = 0; i < rugSize; i++) {
+    image(rug, i * rugWidth, margin, rugWidth, rugHeight, 0, 0, rugImgWidth, rugImgHeight);
+  }
+
+  const tapeSize = worldWidth % rugWidth + 1
+  for (let i = 0; i < tapeSize; i++) {
+    image(tape, i * tapeWidth, 0, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
+    image(tape, i * tapeWidth, margin + rugHeight, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
   }
 }
 
@@ -167,7 +181,8 @@ class Scene1 {
   }
 
   show() {
-    background(255);
+    // background(255);
+    setupBackGround()
     push();
     imageMode(CENTER)
     pop();
