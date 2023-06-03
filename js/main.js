@@ -62,7 +62,8 @@ let catWidth = 100;
 let catHeight = 100;
 let rug;
 let tape;
-let canFood1
+let canFood1;
+let spikeCat
 
 function preload() {
 
@@ -73,7 +74,7 @@ function preload() {
   birdsSound = loadSound('data/birds.wav');
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
-  // catImage = loadImage('data/cat.jpeg');
+  spikeCat = loadImage('data/cat.jpeg');
   rug = loadImage('data/rug.png')
   tape = loadImage('data/tape.png')
   canFood1 = loadImage('data/canFood1.png')
@@ -224,19 +225,22 @@ class Scene2 {
     pop();
 
     canFood.show();
-    $("img[alt$='cat']").remove();
-    catImage = createImg('data/cat.jpeg','cat');
-    catImage.size(catWidth,catHeight);
-    catImage.position(catLeft,catTop);
-
+    // $("img[alt$='cat']").remove();
+    // catImage = createImg('data/cat.jpeg','cat');
+    // catImage.size(catWidth,catHeight);
+    // catImage.position(catLeft,catTop);
     let moveLeft = 1;
     let moveTop = 0;
     if(keyIsDown(37)) {
-      catImage.size(catWidth-=20,catHeight-=20);
+      catWidth-=20
+      catHeight-=20
+      // catImage.size(catWidth-=20,catHeight-=20);
     }
     if(keyIsDown(39)) {
       // press arrow right
-      catImage.position(catWidth+=20,catHeight+=20);
+      catWidth+=20
+      catHeight+=20
+      // catImage.size(catWidth+=20,catHeight+=20);
     }
     if(keyIsDown(38)) {
       // press arrow top
@@ -249,7 +253,8 @@ class Scene2 {
     catLeft += moveLeft;
     catTop += moveTop;
 
-    catImage.position(catLeft,catTop);
+    image(spikeCat, catLeft, catTop, catWidth, catHeight, 0, 0, spikeCat.width, spikeCat.width);
+    // catImage.position(catLeft,catTop);
   }
 }
 
