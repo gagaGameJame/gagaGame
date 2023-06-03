@@ -70,7 +70,7 @@ function preload() {
   birdsSound = loadSound('data/birds.wav');
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
-  catImage = loadImage('data/cat.jpeg');
+  // catImage = loadImage('data/cat.jpeg');
 
 }
 
@@ -165,20 +165,19 @@ class Scene2 {
     noSmooth();
     pop();
 
-    catImage.resize(catWidth,catHeight);
-    image(catImage,catLeft,catTop,catImage.width,catImage.height);
-
+    $("img[alt$='cat']").remove();
+    catImage = createImg('data/cat.jpeg','cat');
+    catImage.size(catWidth,catHeight);
+    catImage.position(catLeft,catTop);
 
     let moveLeft = 1;
     let moveTop = 0;
     if(keyIsDown(37)) {
-      // press arrow left
-      catImage.resize(catWidth-=20,catHeight-=20);
+      catImage.size(catWidth-=20,catHeight-=20);
     }
     if(keyIsDown(39)) {
       // press arrow right
-      catImage.resize(catWidth+=50,catHeight+=50);
-
+      catImage.position(catWidth+=20,catHeight+=20);
     }
     if(keyIsDown(38)) {
       // press arrow top
@@ -191,8 +190,7 @@ class Scene2 {
     catLeft += moveLeft;
     catTop += moveTop;
 
-    // image(catImage,catLeft,catTop);
-
+    catImage.position(catLeft,catTop);
   }
 }
 
