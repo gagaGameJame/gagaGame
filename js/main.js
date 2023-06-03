@@ -8,7 +8,7 @@ let sceneCounter = 0;
 let intro, introText;
 let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat;
 let bgImg;
-let moveX = 0;
+let moveX = 2; // camera and cat move distance per drawing
 let moveY = 0;
 let camX = 0;
 let camY = 0;
@@ -58,7 +58,8 @@ let isSoundOn = false;
 let rug;
 let tape;
 let canFood1;
-let spikeCat
+let spikeCat;
+let cameraX = 0;
 
 function preload() {
 
@@ -151,8 +152,6 @@ class Scene1 {
   constructor() {
     cursor(ARROW);
     margin = width * 0.15;
-    moveX = -worldWidth / 2;
-    moveY = -worldHeight / 2;
     intro = new Intro();
   }
 
@@ -171,8 +170,6 @@ class Scene2 {
 
   constructor() {
     margin = width * 0.15;
-    moveX = -worldWidth / 2;
-    moveY = -worldHeight / 2;
     ground = new Ground();
     hole = new Hole();
     grass = new Grass();
@@ -191,6 +188,7 @@ class Scene2 {
 
   show() {
     clear();
+    moveCamera();
     setupBackGround()
     noStroke();
     push();
@@ -199,7 +197,7 @@ class Scene2 {
     pop();
 
     canFood.show();
-    cat.show();
+    cat.show(moveX);
   }
 }
 
@@ -208,8 +206,6 @@ class Scene3 {
   constructor() {
     cursor(ARROW);
     margin = width * 0.15;
-    moveX = -worldWidth / 2;
-    moveY = -worldHeight / 2;
     ground = new Ground();
     hole = new Hole();
     grass = new Grass();
@@ -352,67 +348,8 @@ function togglePlaying() {
 
 // Click to move around the map
 function moveCamera() {
-
-  if (mouseIsPressed === true) {
-
-    if (mouseX > width / 2) {
-      magX = (mouseX - width / 2) / (width / 2);
-      moveSpeedX = int(20 * magX);
-      moveX -= moveSpeedX;
-    } else {
-      magX = 1 - (mouseX / (width / 2));
-      moveSpeedX = int(20 * magX);
-      moveX += moveSpeedX;
-    }
-
-    if (mouseY > height / 2) {
-      magY = (mouseY - height / 2) / (height / 2);
-      moveSpeedY = int(20 * magY);
-      moveY -= moveSpeedY;
-    } else {
-      magY = 1 - (mouseY / (height / 2));
-      moveSpeedY = int(20 * magY);
-      moveY += moveSpeedY;
-    }
-
-  } else {
-
-    if (moveSpeedX > 0) {
-      if (mouseX > width / 2) {
-        moveSpeedX -= easeMove;
-        moveX -= moveSpeedX;
-      } else {
-        moveSpeedX -= easeMove;
-        moveX += moveSpeedX;
-      }
-    }
-    if (moveSpeedY > 0) {
-      if (mouseY > height / 2) {
-        moveSpeedY -= easeMove;
-        moveY -= moveSpeedY;
-      } else {
-        moveSpeedY -= easeMove;
-        moveY += moveSpeedY;
-      }
-    }
-  }
-
-  if (moveX < -10000) {
-    moveX = -10000;
-  }
-  if (moveX > 600) {
-    moveX = 600;
-  }
-  if (moveY < -5200) {
-    moveY = -5200;
-  }
-  if (moveY > 400) {
-    moveY = 400;
-  }
-
-  camX = constrain(moveX, -10000, 600);
-  camY = constrain(moveY, -5200, 400);
-
+  cameraX = cameraX - moveX;
+  translate(cameraX,0);
 }
 
 function checkCollision() {

@@ -2,12 +2,11 @@ class Cat {
     constructor() {
         this.catWidth = 100;
         this.catHeight = 100;
-        this.catLeft = 0;
+        this.catLeft = 200;
         this.catTop = tileHeight / 2 - this.catHeight / 2;
     }
 
-    show() {
-        let moveLeft = 1;
+    show(moveX) {
         let moveTop = 0;
         let adjustSize = 0;
         if(keyIsDown(37)) {
@@ -26,7 +25,7 @@ class Cat {
             // press arrow down
             moveTop = 5;
         }
-        this.catLeft += moveLeft;
+        this.catLeft += moveX;
         this.catWidth = constrain(this.catWidth + adjustSize, 40, 160);
         this.catHeight = constrain(this.catHeight + adjustSize, 40, 160);
         this.catTop = constrain(this.catTop + moveTop, 60, tileHeight - this.catHeight - 100);
