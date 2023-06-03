@@ -6,7 +6,7 @@ let scene1, scene2, winState, scene3;
 let gameoverState = false;
 let sceneCounter = 0;
 let intro, introText;
-let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole;
+let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood;
 let bgImg;
 let moveX = 0;
 let moveY = 0;
@@ -62,6 +62,7 @@ let catWidth = 100;
 let catHeight = 100;
 let rug;
 let tape;
+let canFood1
 
 function preload() {
 
@@ -75,6 +76,7 @@ function preload() {
   // catImage = loadImage('data/cat.jpeg');
   rug = loadImage('data/rug.png')
   tape = loadImage('data/tape.png')
+  canFood1 = loadImage('data/canFood1.png')
 }
 
 function setup() {
@@ -209,6 +211,7 @@ class Scene2 {
     birds = new Birds();
     winState = new WinState();
     hole = new Hole();
+    canFood = new CanFood(0.2);
   }
 
   show() {
@@ -220,6 +223,7 @@ class Scene2 {
     noSmooth();
     pop();
 
+    canFood.show();
     $("img[alt$='cat']").remove();
     catImage = createImg('data/cat.jpeg','cat');
     catImage.size(catWidth,catHeight);
