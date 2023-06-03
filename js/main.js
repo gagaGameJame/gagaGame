@@ -40,7 +40,7 @@ let tilesList1;
 let threshold = 0.4;
 let blendThreshold = 0.05;
 let darkest = 200;
-let bgmSound, scoreSound, winSound, gameoverSound, birdsSound;
+let bgmSound, catEatSound1, scoreSound, winSound, gameoverSound, birdsSound;
 let sampleIsLooping = false;
 let winIsLooping = false;
 let birdsIsLooping = false;
@@ -56,27 +56,30 @@ let mult = 0.25;
 let isSoundOn = false;
 // let catImage;
 let rug;
-let tape;
+let tape1, tape2;
 let canFood1;
 let spikeCat
 let cameraX = 0;
-let cat_x = 0,
-  cat_y = 0;
+let cat_x = 0, cat_y = 0;
 const canFoodPositions = [];
 const eatPositions = [];
 
 function preload() {
 
   bgmSound = loadSound('data/bgm.mp3');
+  catEatSound1 = loadSound('data/catEatSFX1.mp3')
   scoreSound = loadSound('data/score.wav');
   winSound = loadSound('data/win.wav');
   gameoverSound = loadSound('data/gameover.wav');
   birdsSound = loadSound('data/birds.wav');
+
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
+
   spikeCat = loadImage('data/cat.jpeg');
   rug = loadImage('data/rug.png')
-  tape = loadImage('data/tape.png')
+  tape1 = loadImage('data/tape1.png')
+  tape2 = loadImage('data/tape2.png')
   canFood1 = loadImage('data/canFood1.png')
 }
 
@@ -114,8 +117,8 @@ function setupBackGround() {
   const viewHeight = document.body.clientHeight;
   const rugImgWidth = rug.width
   const rugImgHeight = rug.height
-  const tapeWidth = tape.width
-  const tapeHeight = tape.height
+  const tapeWidth = tape1.width
+  const tapeHeight = tape1.height
 
   const scaleRate = (viewHeight - tapeHeight * 2) / rugImgHeight
   const rugWidth = rugImgWidth * scaleRate
@@ -129,8 +132,8 @@ function setupBackGround() {
 
   const tapeSize = worldWidth % rugWidth + 1
   for (let i = 0; i < tapeSize; i++) {
-    image(tape, i * tapeWidth, 0, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
-    image(tape, i * tapeWidth, margin + rugHeight, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
+    image(tape1, i * tapeWidth, 0, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
+    image(tape2, i * tapeWidth, margin + rugHeight, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
   }
 }
 

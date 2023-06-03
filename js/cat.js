@@ -24,6 +24,7 @@ class Cat {
         for (let i = 0; i < canFoodPositions.length; i++) {
             const distance = dist(cat_x, cat_y, canFoodPositions[i].x, canFoodPositions[i].y);
             if (distance < 50) {
+                catEatSound1.play()
                 adjustSize += 20
                 eatPositions.push({x: canFoodPositions[i].x, y: canFoodPositions[i].y})
                 canFoodPositions[i].x = -1000
