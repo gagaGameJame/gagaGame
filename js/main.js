@@ -19,10 +19,10 @@ let magY = 0;
 let persp = 0.75;
 let pg;
 let mapSize = 25;
-let tileWidth = 1000;
-let tileHeight = 500;
-let worldWidth = mapSize * (tileWidth / 2);
-let worldHeight = mapSize * (tileHeight / 2);
+let tileWidth = 1280;
+let tileHeight = 720;
+let worldWidth = mapSize * tileWidth // mapSize * (tileWidth / 2);
+let worldHeight = tileHeight // mapSize * (tileHeight / 2);
 let x_screen = [];
 let y_screen = [];
 let x_start = -tileWidth / 2;
@@ -60,6 +60,7 @@ let isSoundOn = false;
 let catImage;
 let catWidth = 100;
 let catHeight = 100;
+let rug;
 
 function preload() {
 
@@ -71,7 +72,7 @@ function preload() {
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
   // catImage = loadImage('data/cat.jpeg');
-
+  rug = loadImage('data/rug.png')
 }
 
 function setup() {
@@ -98,6 +99,45 @@ function keyReleased() {
     togglePlaying();
   }
 }
+
+function setupBackGround() {
+  const viewHeight = document.body.clientHeight;
+  const scaleRate = 0.4
+  const imgWidth = rug.width
+  const imgHeight = rug.height
+  const rugWidth = imgWidth * scaleRate
+  const rugHeight = imgHeight * scaleRate
+  const margin = (viewHeight - rugHeight) / 2
+  for (let i = 0; i < mapSize; i++) {
+    image(rug, i * rugWidth, margin, rugWidth, rugHeight, 0, 0, imgWidth, imgHeight);
+  }
+}
+
+// function keyIsDown(key) {
+//   let moveLeft = 0;
+//   let moveTop = 0;
+//   switch(key){
+//     case 37:
+//       // arrow left
+//       moveLeft = -1;
+//       break;
+//     case 39:
+//       // arrow right
+//       moveLeft = 1;
+//       break;
+//     case 38:
+//       // arrow top
+//       moveTop = -1;
+//       break;
+//     case 40:
+//       // arrow down
+//       moveTop = 1;
+//       break;
+//   }
+//   this.catLeft += moveLeft;
+//   this.catTop += moveTop;
+//   this.cat = square(this.catLeft,this.catTop,55);
+// }
 
 function draw() {
   switch (sceneCounter) {
@@ -158,7 +198,7 @@ class Scene2 {
 
   show() {
     clear();
-    background(255);
+    setupBackGround()
     noStroke();
     push();
     imageMode(CORNER);

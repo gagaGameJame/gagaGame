@@ -20,7 +20,7 @@ class Rocks {
     }
 
     show() {
-        
+
         for(let i = 0; i < worldWidth; i += this.densityX) {
             for(let j = 0; j < worldHeight; j += this.densityY){
                 if(rockType[i][j] == 'A') {
@@ -64,7 +64,7 @@ function drawRocksA(_x, _y) {
     vertex(25, 14);
     endShape();
     pop();
-  
+
   }
 
 function drawRocksB(_x, _y) {
@@ -97,7 +97,7 @@ function drawRocksB(_x, _y) {
     curveVertex(20, 14);
     endShape();
     pop();
-    
+
 
     }
 
