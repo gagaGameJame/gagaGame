@@ -57,6 +57,9 @@ let cat;
 let catLeft = 0;
 let catTop = 0;
 let isSoundOn = false;
+let catImage;
+let catWidth = 100;
+let catHeight = 100;
 
 function preload() {
 
@@ -67,6 +70,7 @@ function preload() {
   birdsSound = loadSound('data/birds.wav');
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
+  catImage = loadImage('data/cat.jpeg');
 
 }
 
@@ -94,33 +98,6 @@ function keyReleased() {
     togglePlaying();
   }
 }
-
-
-// function keyIsDown(key) {
-//   let moveLeft = 0;
-//   let moveTop = 0;
-//   switch(key){
-//     case 37:
-//       // arrow left
-//       moveLeft = -1;
-//       break;
-//     case 39:
-//       // arrow right
-//       moveLeft = 1;
-//       break;
-//     case 38:
-//       // arrow top
-//       moveTop = -1;
-//       break;
-//     case 40:
-//       // arrow down
-//       moveTop = 1;
-//       break;
-//   }
-//   this.catLeft += moveLeft;
-//   this.catTop += moveTop;
-//   this.cat = square(this.catLeft,this.catTop,55);
-// }
 
 function draw() {
   switch (sceneCounter) {
@@ -184,19 +161,24 @@ class Scene2 {
     background(255);
     noStroke();
     push();
-    imageMode(CENTER)
+    imageMode(CORNER);
+    noSmooth();
     pop();
-    cat = square(catLeft, catTop, 100);
-    // describe('white square with black outline in mid-right of canvas');
-    let moveLeft = 0;
+
+    catImage.resize(catWidth,catHeight);
+    image(catImage,catLeft,catTop,catImage.width,catImage.height);
+
+
+    let moveLeft = 1;
     let moveTop = 0;
     if(keyIsDown(37)) {
       // press arrow left
-      moveLeft = -5;
+      catImage.resize(catWidth-=20,catHeight-=20);
     }
     if(keyIsDown(39)) {
       // press arrow right
-      moveLeft = 5;
+      catImage.resize(catWidth+=50,catHeight+=50);
+
     }
     if(keyIsDown(38)) {
       // press arrow top
@@ -206,9 +188,11 @@ class Scene2 {
       // press arrow down
       moveTop = 5;
     }
-    catLeft = catLeft + moveLeft;
-    catTop = catTop + moveTop;
-    cat = square(catLeft,catTop,100);
+    catLeft += moveLeft;
+    catTop += moveTop;
+
+    // image(catImage,catLeft,catTop);
+
   }
 }
 
