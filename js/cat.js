@@ -7,6 +7,9 @@ class Cat {
         this.catTop = tileHeight / 2 - this.catHeight / 2;
         this.collisionDisFood = 50 //this.catHeight * 0.2
         this.collisionDisBox = 50;
+        this.stuckBox;
+        this.stuckTime = 3;
+        this.boxLeftTime = this.stuckTime;
     }
 
     show() {
@@ -20,7 +23,6 @@ class Cat {
             moveTop = catMove_y;
         }
         this.catLeft += catMove_x;
-        // this.catTop = constrain(this.catTop + moveTop, 60, tileHeight - this.catHeight - 100);
         this.catTop += moveTop;
 
         if (this.catTop <= carpetTop || this.catTop + this.catHeight >= carpetEnd) {
@@ -46,14 +48,16 @@ class Cat {
         // eat can and become larger
         this.checkEatFood();
         this.checkTouchBox();
-        if(!isPaused){
-            image(catImg, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
+        if(isPaused){
+            this.showBoxTime(this.stuckBox,this.boxLeftTime);
+            return;
         }
+        image(catImg, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
+
     }
 
     checkEatFood(){
         let adjustSize = 0;
-        // const collisionDis = 30 //this.catHeight * 0.2
         if(isPaused){
             return;
         }
@@ -88,13 +92,11 @@ class Cat {
     checkTouchBox() {
         for (let i = 0; i < boxPositions.length; i++) {
             let box = boxPositions[i];
-            // const distance = dist(cat_x + this.catWidth/2, cat_y, box.x, box.y);
             const distance = calculateDis(cat_x,cat_y,boxPositions[i]);
-            if (distance < this.collisionDisBox && !box.hasChecked && this.catWidth < box.width &&!isPaused) {
+            if (distance < this.collisionDisBox && !box.hasChecked && this.catWidth < box.width * 0.7  &&!isPaused) {
                 boxPositions[i].hasChecked = true;
                 boxSound.play();
-                // boxes.showTime({x:this.catLeft,y:this.catTop});
-                showTime({x:this.catLeft,y:this.catTop});
+                this.stuckBox = boxPositions[i];
                 this.pause();
             }
         }
@@ -104,6 +106,12 @@ class Cat {
         catMove_x = 0;
         catMove_y = 0;
         isPaused = true;
+        this.boxLeftTime = this.stuckTime;
+        for(let i = 1; i < this.stuckTime ; i++) {
+            setTimeout(() => {
+                this.boxLeftTime = this.stuckTime - i;
+            }, i * 1000);
+        }
         setTimeout(()=>{
             // cameraX -= catMove;
             catMove_x = CAT_SPEED_X;
@@ -118,6 +126,14 @@ class Cat {
         this.catHeight = catImg.height * this.scaleRate;
         this.catLeft = 200;
         this.catTop = tileHeight / 2 - this.catHeight / 2;
+    }
+
+    showBoxTime(box, boxLeftTime){
+        push();
+        fill(255);
+        textSize(40);
+        text(boxLeftTime + '\'\'',box.x+box.width/2,box.y+box.height/2.1);
+        pop();
     }
 }
 
@@ -140,13 +156,4 @@ function calculateDis(cat_x, cat_y, position ) {
     return min(distance)
 }
 
-function showTime(boxPosition){
-    // push();
-    // textAlign(CENTER);
-    // textSize(60);
-    // textFont(karlaBold);
-    // text('3',boxPosition.x,0);
-    // setTimeout(()=>text('3'''))
-    // pop();
-}
 
