@@ -97,10 +97,10 @@ function setup() {
   scene3 = new Scene3();
 }
 function keyReleased() {
-  // press space to start game
-  if (keyCode === 32 && sceneCounter === 0) {
+  // press any key to start game
+  if (sceneCounter === 0) {
     sceneCounter = 1;
-    // bgmStart()
+    bgmStart()
   }
 
   // press esc to exit
@@ -164,17 +164,19 @@ function draw() {
 class Scene1 {
   constructor() {
     cursor(ARROW);
-    margin = width * 0.15;
-    intro = new Intro();
+    // margin = width * 0.15;
+    // intro = new Intro();
   }
 
   show() {
-    // background(255);
-    setupBackGround()
+    background(255);
+    image(titleBGImg, 0, 0, document.body.clientWidth, document.body.clientHeight, 0, 0, titleBGImg.width, titleBGImg.height)
+    image(startGameImg, document.body.clientWidth * 0.6, document.body.clientHeight * 0.6, startGameImg.width, startGameImg.height, 0, 0, startGameImg.width, startGameImg.height)
+    image(titleImg, document.body.clientWidth * 0.1 ,0, titleImg.width, titleImg.height, 0, 0, titleImg.width, titleImg.height)
     push();
     imageMode(CENTER)
     pop();
-    intro.show();
+    // intro.show();
   }
 }
 
