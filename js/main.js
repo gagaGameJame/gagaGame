@@ -186,8 +186,6 @@ function draw() {
 class Scene1 {
   constructor() {
     cursor(ARROW);
-    // margin = width * 0.15;
-    // intro = new Intro();
   }
 
   show() {
@@ -198,7 +196,6 @@ class Scene1 {
     push();
     imageMode(CENTER)
     pop();
-    // intro.show();
   }
 }
 
@@ -386,7 +383,6 @@ function showScore() {
 }
 
 function windowResized() {
-
   resizeCanvas(windowWidth, windowHeight);
 
 }

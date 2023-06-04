@@ -16,7 +16,12 @@ class PaperBox {
             for(let j = 0; j < worldHeight; j += this.densityY){
                 this.offsetX[i][j] = int(random(-200,200));
                 this.offsetY[i][j] = int(random(60, tileHeight - this.boxHeight - 150));
-                boxPositions.push({x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.boxWidth, height: this.boxHeight, hasChecked: false});
+
+                const box_x = i + this.offsetX[i][j];
+                const box_y = j +  this.offsetY[i][j];
+                if(box_x >= 200 && box_y >= tape1.height && box_y <= worldHeight - tape2.height - this.boxHeight){
+                    boxPositions.push({x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.boxWidth, height: this.boxHeight, hasChecked: false});
+                }
             }
         }
     }
@@ -24,19 +29,22 @@ class PaperBox {
     show() {
         // const boxWidth = 130
         // const boxHeight = 130
-        boxImg.width = this.boxWidth;
-        boxImg.height = this.boxHeight;
+        // boxImg.width = this.boxWidth;
+        // boxImg.height = this.boxHeight;
+        // for(let i = 0; i < worldWidth; i += this.densityX) {
+        //     for(let j = 0; j < worldHeight; j += this.densityY){
+        //         // boxPositions.push({x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.boxWidth, height: this.boxHeight, hasChecked: false});
+        //         let box_x = i + this.offsetX[i][j];
+        //         let box_y = j +  this.offsetY[i][j];
+        //         if(box_x < 200 && box_y<tape1.height && box_y>worldHeight-tape2.height-this.boxHeight){
+        //             continue;
+        //         }
+        //         image(boxImg, box_x, box_y, this.boxWidth, this.boxHeight, 0, 0, this.boxWidth, this.boxHeight);
+        //     }
+        // }
+        for (let i = 0; i < boxPositions.length; i++) {
+            image(boxImg, boxPositions[i].x, boxPositions[i].y, this.boxWidth, this.boxHeight, 0, 0, boxImg.width, boxImg.height);
 
-        for(let i = 0; i < worldWidth; i += this.densityX) {
-            for(let j = 0; j < worldHeight; j += this.densityY){
-                // boxPositions.push({x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.boxWidth, height: this.boxHeight, hasChecked: false});
-                let box_x = i + this.offsetX[i][j];
-                let box_y = j +  this.offsetY[i][j];
-                if(box_x<200 && box_y<tape1.height && box_y>worldHeight-tape2.height-this.boxHeight){
-                    continue;
-                }
-                image(boxImg, box_x, box_y, this.boxWidth, this.boxHeight, 0, 0, this.boxWidth, this.boxHeight);
-            }
         }
     }
 

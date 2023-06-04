@@ -97,12 +97,12 @@ class Cat {
                 boxPositions[i].hasChecked = true;
                 boxSound.play();
                 this.stuckBox = boxPositions[i];
-                this.pause();
+                this.pause(boxPositions[i]);
             }
         }
     }
 
-    pause(){
+    pause(boxPosition){
         catMove_x = 0;
         catMove_y = 0;
         isPaused = true;
@@ -118,6 +118,8 @@ class Cat {
             catMove_y = CAT_SPEED_Y;
             isPaused = false;
             boxSound.stop();
+            boxPosition.x = -1000
+            boxPosition.y = -1000
         },3000);
     }
 
