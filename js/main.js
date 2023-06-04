@@ -54,7 +54,7 @@ let karla, karlaBold, arial;
 let mult = 0.25;
 let isSoundOn = false;
 let rug, tape1, tape2;
-let catImg, canImg, cucumberImg, boxImg, tvImg;
+let catImg, canImg, cucumberImg, boxImg, tvImg, winImg;
 let startGameImg, titleImg, titleBGImg;
 let cameraX = 0;
 let cat_x = 0, cat_y = 0;
@@ -101,7 +101,8 @@ function preload() {
   canImg = loadImage('data/can.png')
   cucumberImg = loadImage('data/cucumber.png')
   boxImg = loadImage('data/CardboardBox.png');
-  tvImg = loadImage('data/TV.png')
+  tvImg = loadImage('data/TV.png');
+  winImg = loadImage('data/winBG.png')
 }
 
 function setup() {
@@ -256,11 +257,11 @@ class Scene3 {
     textFont(karlaBold);
     if(gameStatus === 'Lost') {
       text("Game Over", width / 2, height / 2 - 100);
+      textSize(30);
+      text("Press ESC to restart", width / 2, height / 2 );
     } else if(gameStatus === 'Win') {
-      text("You Win!", width / 2, height / 2 - 100);
+      image(winImg, 0, 0, document.body.clientWidth, document.body.clientHeight);
     }
-    textSize(30);
-    text("Press ESC to restart", width / 2, height / 2 );
     pop();
   }
 }
