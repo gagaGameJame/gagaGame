@@ -85,6 +85,8 @@ class Cat {
             if (distance < 50 && !box.hasChecked && this.catWidth < box.width &&!isPaused) {
                 boxPositions[i].hasChecked = true;
                 boxSound.play();
+                // boxes.showTime({x:this.catLeft,y:this.catTop});
+                showTime({x:this.catLeft,y:this.catTop});
                 this.pause();
             }
         }
@@ -93,7 +95,7 @@ class Cat {
     pause(){
         catMove_x = 0;
         catMove_y = 0;
-        isPaused = true
+        isPaused = true;
         setTimeout(()=>{
             // cameraX -= catMove;
             catMove_x = CAT_SPEED_X;
@@ -126,5 +128,13 @@ function calculateFoodDis(cat_x, cat_y, position) {
     return min(distance)
 }
 
-
+function showTime(boxPosition){
+    // push();
+    // textAlign(CENTER);
+    // textSize(60);
+    // textFont(karlaBold);
+    // text('3',boxPosition.x,0);
+    // setTimeout(()=>text('3'''))
+    // pop();
+}
 

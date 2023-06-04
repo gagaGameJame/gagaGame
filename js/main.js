@@ -6,7 +6,7 @@ let scene1, scene2, winState, scene3;
 let gameoverState = false;
 let sceneCounter = 0;
 let intro, introText;
-let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat, cucumber,box;
+let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat, cucumber,boxes,tv;
 let bgImg;
 let moveY = 0;
 let camX = 0;
@@ -50,11 +50,11 @@ let dx, dy, targetX, targetY;
 let d = [];
 let d2 = [];
 let score = 0;
-let karla, karlaBold;
+let karla, karlaBold, arial;
 let mult = 0.25;
 let isSoundOn = false;
 let rug, tape1, tape2;
-let catImg, canImg, cucumberImg, boxImg;
+let catImg, canImg, cucumberImg, boxImg, tvImg;
 let startGameImg, titleImg, titleBGImg;
 let cameraX = 0;
 let cat_x = 0, cat_y = 0;
@@ -70,6 +70,8 @@ const CAT_SPEED_X = 2;
 const CAT_SPEED_Y = 5;
 let catMove_x = CAT_SPEED_X; // camera and cat move distance per drawing
 let catMove_y = CAT_SPEED_Y;
+let startTime;
+let leftTime;
 
 function preload() {
 
@@ -84,6 +86,7 @@ function preload() {
 
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
+  arial = loadFont('data/arial.ttf');
 
   catImg = loadImage('data/cat1f.png');
 
@@ -97,6 +100,7 @@ function preload() {
   canImg = loadImage('data/can.png')
   cucumberImg = loadImage('data/cucumber.png')
   boxImg = loadImage('data/CardboardBox.png');
+  tvImg = loadImage('data/TV.png')
 }
 
 function setup() {
@@ -110,8 +114,10 @@ function keyReleased() {
   // press any key to start game
   if (sceneCounter === 0) {
     sceneCounter = 1;
+    startTime = new Date();
     bgmStart()
   }
+
 
   // press esc to exit
   if (keyCode === 27) {
@@ -119,7 +125,8 @@ function keyReleased() {
     cat.reset()
     cameraX = 0;
     scene2 = new Scene2();
-    bgmEnd()
+    boxSound.stop();
+    bgmEnd();
   }
 
   // press a to toggle sound
@@ -199,8 +206,9 @@ class Scene2 {
     winState = new WinState();
     canFood = new CanFood(0.8);
     cat = new Cat(0.5);
-    box = new PaperBox(rate);
+    boxes = new PaperBox(rate);
     cucumber = new Cucumber(0.7);
+    tv = new Tv();
   }
 
   show() {
@@ -214,10 +222,13 @@ class Scene2 {
     noSmooth();
     pop();
 
-    cat.show();
+
     canFood.show();
     cucumber.show();
-    box.show();
+    boxes.show();
+    cat.show();
+    tv.show();
+    checkTimeUp();
   }
 }
 
@@ -239,6 +250,8 @@ class Scene3 {
     textSize(60);
     textFont(karlaBold);
     text("Game Over", width / 2, height / 2 - 100);
+    textSize(30);
+    text("Press ESC to restart", width / 2, height / 2 );
     pop();
   }
 }
@@ -366,4 +379,10 @@ function windowResized() {
 
   resizeCanvas(windowWidth, windowHeight);
 
+}
+
+function checkTimeUp() {
+  if(leftTime === 0) {
+    sceneCounter = 2;
+  }
 }

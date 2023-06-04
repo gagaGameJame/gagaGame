@@ -24,6 +24,11 @@ class Cucumber {
 
     show() {
         for (let i = 0; i < cucumberPositions.length; i++) {
+            // let food_x = cucumberPositions[i].x;
+            // let food_y = cucumberPositions[i].y;
+            // if(food_x<300 && food_y<tape1.height && food_y>worldHeight-tape2.height-this.cucumberHeight-100){
+            //     continue;
+            // }
             image(cucumberImg, cucumberPositions[i].x, cucumberPositions[i].y, cucumberPositions[i].width, cucumberPositions[i].height, 0, 0, cucumberImg.width, cucumberImg.height);
         }
     }
