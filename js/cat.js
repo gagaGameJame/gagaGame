@@ -48,11 +48,10 @@ class Cat {
         this.checkItem();
 
         if(isPaused){
-            image(catInBoxImg, this.stuckBox.x, this.stuckBox.y + 50, catInBoxImg.width * 0.7, catInBoxImg.height * 0.7, 0, 0, catImg.width, catImg.width);
             this.showBoxTime(this.stuckBox,this.boxLeftTime);
-            return;
+        } else {
+            image(catImg, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
         }
-        image(catImg, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
 
     }
 
@@ -108,8 +107,7 @@ class Cat {
         catMove_y = 0;
         isPaused = true;
         this.boxLeftTime = this.stuckTime;
-        boxPosition.x = -1000
-        boxPosition.y = -1000
+        boxPosition.image = catInBoxImg
         for(let i = 1; i < this.stuckTime ; i++) {
             setTimeout(() => {
                 this.boxLeftTime = this.stuckTime - i;
@@ -121,7 +119,8 @@ class Cat {
             catMove_y = CAT_SPEED_Y;
             isPaused = false;
             boxSound.stop();
-            // todo: update box image
+            boxPosition.x = -1000
+            boxPosition.y = -1000
         },3000);
     }
 

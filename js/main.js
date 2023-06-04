@@ -1,57 +1,21 @@
-/* References: https://p5-demos.glitch.me/, https://compform.net/tiles/, https://editor.p5js.org/ambikajo/sketches/cKu3Gn0Po,
-https://hazzzaa.itch.io/forest, https://www.youtube.com/watch?v=OTNpiLUSiB4, https://pikuma.com/blog/isometric-projection-in-games,
-https://www.youtube.com/watch?v=KkyIDI6rQJI, https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/shadowBlur */
-
-let scene1, scene2, winState, scene3;
-let gameoverState = false;
+let scene1, scene2, scene3;
 let sceneCounter = 0;
-let intro, introText;
-let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat, cucumber,boxes,tv;
-let bgImg;
-let moveY = 0;
-let camX = 0;
-let camY = 0;
-let moveSpeedX, moveSpeedY;
-let easeMove = 0.2;
-let magX = 0;
-let magY = 0;
-let persp = 0.75;
-let pg;
+let canFood, cat, cucumber,boxes,tv;
+
 let mapSize = 25;
 let tileWidth = 1280;
 let tileHeight = 720;
 let worldWidth = mapSize * tileWidth // mapSize * (tileWidth / 2);
 let worldHeight = tileHeight // mapSize * (tileHeight / 2);
-let x_screen = [];
-let y_screen = [];
-let x_start = -tileWidth / 2;
-let y_start = -tileHeight / 2;
-let tileTypes = ['A', 'B', 'C'];
-let tileType = [];
-let rockTypes = ['A', 'B', 'C'];
-let rockType = [];
-let treeTypes = ['A', 'B', 'C'];
-let treeType = [];
-let grassTypes = ['A', 'B', 'C'];
-let grassType = [];
-let tiles;
-let tilesList1;
-let threshold = 0.4;
-let blendThreshold = 0.05;
-let darkest = 200;
-let bgmSound, catEatSound1, catEatSound2, scoreSound, winSound, gameoverSound, birdsSound,boxSound;
-let sampleIsLooping = false;
-let winIsLooping = false;
-let birdsIsLooping = false;
-let gameoverSoundIsLooping = false;
+
+let bgmSound, catEatSound1, catEatSound2, boxSound;
+
 let soundOn;
 let margin;
-let dx, dy, targetX, targetY;
-let d = [];
-let d2 = [];
+
 let score = 0;
 let karla, karlaBold, arial;
-let mult = 0.25;
+
 let isSoundOn = false;
 let rug, tape1, tape2;
 let catImg, canImg, cucumberImg, boxImg, tvImg, winImg, catInBoxImg;
@@ -78,10 +42,6 @@ function preload() {
   catEatSound1 = loadSound('data/catEatSFX1.mp3')
   catEatSound2 = loadSound('data/catEatSFX2.mp3')
   boxSound = loadSound('data/catBoxSFX.mp3');
-  scoreSound = loadSound('data/score.wav');
-  winSound = loadSound('data/win.wav');
-  gameoverSound = loadSound('data/gameover.wav');
-  birdsSound = loadSound('data/birds.wav');
 
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
@@ -203,7 +163,6 @@ class Scene2 {
 
   constructor() {
     margin = width * 0.15;
-    winState = new WinState();
     canFood = new CanFood(0.8);
     cat = new Cat(0.5);
     boxes = new PaperBox(rate);
@@ -262,80 +221,6 @@ class Scene3 {
   }
 }
 
-class Intro {
-  constructor() {
-    // introText = 'Many people have experienced clinical depression at some point in their lives. Some people could experience anxiety, hopelessness, and the feeling that a part of themselves has disappeared. This project aims to promote awareness and motivate those suffering to seek help or at least feel that there is hope.';
-    this.leading = 30;
-    this.py = 200;
-  }
-
-  show() {
-
-    fill(0, 150);
-    noStroke();
-    rectMode(CENTER);
-    rect(width / 2, 440, 840, 700, 20);
-
-    push();
-    fill(255, 220);
-    textFont(karlaBold);
-    textLeading(this.leading);
-    textSize(28);
-    textAlign(CENTER);
-    text("The Healing Forest", width / 2 + 5, this.py);
-    textSize(24);
-    text("Instructions", width / 2, this.py + this.leading * 7, 600);
-    textSize(18);
-    textFont(karla);
-    textAlign(LEFT);
-    text(introText, width / 2, this.py + this.leading * 2, 670);
-    textAlign(CENTER);
-    text("press 'space' to start game", width / 2, this.py + this.leading * 8, 600);
-    pop();
-  }
-}
-
-class WinState {
-
-  constructor() {
-    this.colorChoice = 0;
-    this.counter = 0;
-  }
-  show() {
-    if (score === 5) {
-      push();
-      fill(255);
-      textAlign(CENTER);
-      textSize(60);
-      textFont(karlaBold);
-      text("You Win!", width / 2, height / 2 - 180);
-      pop();
-
-      player.c = identity.c[this.colorChoice];
-
-      if (this.counter > 5) {
-        this.colorChoice = round(random(0, 4));
-        this.counter = 0;
-      }
-      this.counter++;
-
-      if (sampleIsLooping) {
-        bgmSound.stop();
-        sampleIsLooping = false;
-        if (!birdsIsLooping) {
-          birdsSound.loop();
-          birdsIsLooping = true;
-        }
-      }
-      if (!winIsLooping) {
-        winSound.play();
-        winIsLooping = true;
-      }
-    }
-  }
-}
-
-
 function bgmStart() {
   isSoundOn = true;
   bgmSound.loop();
@@ -369,16 +254,6 @@ function togglePlaying() {
 function moveCamera() {
   cameraX = cameraX - catMove_x;
   translate(cameraX,0);
-}
-
-function showScore() {
-  score = identity.collided[0] + identity.collided[1] + identity.collided[2] + identity.collided[3] + identity.collided[4];
-  push();
-  fill(255);
-  textSize(36);
-  textFont(karlaBold);
-  text('Identities Recovered: ' + score + '/5', 70, 80);
-  pop();
 }
 
 function windowResized() {
