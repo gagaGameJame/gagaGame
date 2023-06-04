@@ -49,6 +49,7 @@ class Cat {
         this.checkEatFood();
         this.checkTouchBox();
         if(isPaused){
+            image(catInBoxImg, this.stuckBox.x, this.stuckBox.y + 50, catInBoxImg.width * 0.7, catInBoxImg.height * 0.7, 0, 0, catImg.width, catImg.width);
             this.showBoxTime(this.stuckBox,this.boxLeftTime);
             return;
         }
@@ -96,7 +97,7 @@ class Cat {
             if (distance < this.collisionDisBox && !box.hasChecked && this.catWidth < box.width * 0.7  &&!isPaused) {
                 boxPositions[i].hasChecked = true;
                 boxSound.play();
-                this.stuckBox = boxPositions[i];
+                this.stuckBox = {x:box.x, y:box.y, width:box.width,height:box.height};
                 this.pause(boxPositions[i]);
             }
         }
@@ -107,6 +108,8 @@ class Cat {
         catMove_y = 0;
         isPaused = true;
         this.boxLeftTime = this.stuckTime;
+        boxPosition.x = -1000
+        boxPosition.y = -1000
         for(let i = 1; i < this.stuckTime ; i++) {
             setTimeout(() => {
                 this.boxLeftTime = this.stuckTime - i;
@@ -118,8 +121,6 @@ class Cat {
             catMove_y = CAT_SPEED_Y;
             isPaused = false;
             boxSound.stop();
-            boxPosition.x = -1000
-            boxPosition.y = -1000
         },3000);
     }
 

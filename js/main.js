@@ -54,7 +54,7 @@ let karla, karlaBold, arial;
 let mult = 0.25;
 let isSoundOn = false;
 let rug, tape1, tape2;
-let catImg, canImg, cucumberImg, boxImg, tvImg, winImg;
+let catImg, canImg, cucumberImg, boxImg, tvImg, winImg, catInBoxImg;
 let startGameImg, titleImg, titleBGImg;
 let cameraX = 0;
 let cat_x = 0, cat_y = 0;
@@ -103,6 +103,7 @@ function preload() {
   boxImg = loadImage('data/CardboardBox.png');
   tvImg = loadImage('data/TV.png');
   winImg = loadImage('data/WinBG.png')
+  catInBoxImg = loadImage('data/catInBox.png')
 }
 
 function setup() {
