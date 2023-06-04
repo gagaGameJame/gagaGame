@@ -23,7 +23,8 @@ class Cat {
 
         if (this.catTop <= carpetTop || this.catTop + this.catHeight >= carpetEnd) {
             outSideCarpet = true;
-            sceneCounter = 2
+            gameStatus = 'Lost';
+            sceneCounter = 2;
             return;
         }
 
@@ -59,6 +60,7 @@ class Cat {
                 eatPositions.push({type: 'canFood', x: canFoodPositions[i].x, y: canFoodPositions[i].y})
                 canFoodPositions[i].x = -1000
                 canFoodPositions[i].y = -1000
+                score += 10;
             }
         }
 
@@ -71,6 +73,7 @@ class Cat {
                 eatPositions.push({type: 'cucumber',x: cucumberPositions[i].x, y: cucumberPositions[i].y})
                 cucumberPositions[i].x = -1000
                 cucumberPositions[i].y = -1000
+                score += 5;
             }
         }
 

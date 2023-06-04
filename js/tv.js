@@ -2,7 +2,7 @@ class Tv {
     constructor() {
         this.score;
         this.time;
-        this.rate = 0.6
+        this.rate = 0.65
         this.totalTime = 90;
     }
 
@@ -14,8 +14,13 @@ class Tv {
             push();
             fill(255);
             textSize(40);
-            textFont(arial);
-            text(leftTime+'\'\'',-cameraX+60,80);
+            // textFont(arial);
+            textStyle(BOLD);
+            text(leftTime+'\'\'',-cameraX+65,70);
+            textSize(20);
+            textStyle(NORMAL);
+            fill(255,215,0); // gold
+            text(score+' \| 100',-cameraX+60,100);
             pop();
         }
     }

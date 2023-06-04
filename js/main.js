@@ -72,6 +72,7 @@ let catMove_x = CAT_SPEED_X; // camera and cat move distance per drawing
 let catMove_y = CAT_SPEED_Y;
 let startTime;
 let leftTime;
+let gameStatus = 'Wait';
 
 function preload() {
 
@@ -127,6 +128,8 @@ function keyReleased() {
     scene2 = new Scene2();
     boxSound.stop();
     bgmEnd();
+    gameStatus = 'Wait';
+    score = 0;
   }
 
   // press a to toggle sound
@@ -213,6 +216,7 @@ class Scene2 {
 
   show() {
     clear();
+    gameStatus = 'Process';
     background(0);
     moveCamera();
     setupBackGround()
@@ -229,6 +233,7 @@ class Scene2 {
     cat.show();
     tv.show();
     checkTimeUp();
+    checkScore();
   }
 }
 
@@ -249,7 +254,11 @@ class Scene3 {
     textAlign(CENTER);
     textSize(60);
     textFont(karlaBold);
-    text("Game Over", width / 2, height / 2 - 100);
+    if(gameStatus === 'Lost') {
+      text("Game Over", width / 2, height / 2 - 100);
+    } else if(gameStatus === 'Win') {
+      text("You Win!", width / 2, height / 2 - 100);
+    }
     textSize(30);
     text("Press ESC to restart", width / 2, height / 2 );
     pop();
@@ -383,6 +392,14 @@ function windowResized() {
 
 function checkTimeUp() {
   if(leftTime === 0) {
+    gameStatus = 'Lost';
+    sceneCounter = 2;
+  }
+}
+
+function checkScore() {
+  if(score >= 100){
+    gameStatus = 'Win';
     sceneCounter = 2;
   }
 }
