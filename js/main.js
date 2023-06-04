@@ -40,7 +40,7 @@ let tilesList1;
 let threshold = 0.4;
 let blendThreshold = 0.05;
 let darkest = 200;
-let bgmSound, catEatSound1, scoreSound, winSound, gameoverSound, birdsSound;
+let bgmSound, catEatSound1, catEatSound2, scoreSound, winSound, gameoverSound, birdsSound;
 let sampleIsLooping = false;
 let winIsLooping = false;
 let birdsIsLooping = false;
@@ -67,6 +67,7 @@ function preload() {
 
   bgmSound = loadSound('data/bgm.mp3');
   catEatSound1 = loadSound('data/catEatSFX1.mp3')
+  catEatSound2 = loadSound('data/catEatSFX2.mp3')
   scoreSound = loadSound('data/score.wav');
   winSound = loadSound('data/win.wav');
   gameoverSound = loadSound('data/gameover.wav');

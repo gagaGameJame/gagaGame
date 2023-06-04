@@ -37,7 +37,7 @@ class Cat {
         for (let i = 0; i < cucumberPositions.length; i++) {
             const distance = dist(cat_x, cat_y, cucumberPositions[i].x, cucumberPositions[i].y);
             if (distance < 50) {
-                catEatSound1.play()
+                catEatSound2.play()
                 adjustSize -= 20
                 eatPositions.push({type: 'cucumber',x: cucumberPositions[i].x, y: cucumberPositions[i].y})
                 cucumberPositions[i].x = -1000
