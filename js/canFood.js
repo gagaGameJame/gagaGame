@@ -17,19 +17,31 @@ class CanFood {
                 // rockType[i][j] = random(rockTypes);
                 this.offsetX[i][j] = int(random(-200,200)) + 60 //+ this.densityX;
                 this.offsetY[i][j] = int(random(-200,200)) + 70 //+ this.densityY;
-                canFoodPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.canWidth, height:this.canHeight})
+                itemPositions.push({
+                    type: 'canFood',
+                    x: i + this.offsetX[i][j],
+                    y: j + this.offsetY[i][j],
+                    width: this.canWidth,
+                    height:this.canHeight
+                });
+                // canFoodPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.canWidth, height:this.canHeight})
             }
           }
     }
 
     show() {
-        for (let i = 0; i < canFoodPositions.length; i++) {
-            // let food_x = canFoodPositions[i].x;
-            // let food_y = canFoodPositions[i].y;
-            // if(food_x<200 && food_y<tape1.height && food_y>worldHeight-tape2.height-this.canHeight){
-            //     continue;
-            // }
-            image(canImg, canFoodPositions[i].x, canFoodPositions[i].y, this.canWidth, this.canHeight, 0, 0, canImg.width, canImg.height);
+        // for (let i = 0; i < canFoodPositions.length; i++) {
+        //     // let food_x = canFoodPositions[i].x;
+        //     // let food_y = canFoodPositions[i].y;
+        //     // if(food_x<200 && food_y<tape1.height && food_y>worldHeight-tape2.height-this.canHeight){
+        //     //     continue;
+        //     // }
+        //     image(canImg, canFoodPositions[i].x, canFoodPositions[i].y, this.canWidth, this.canHeight, 0, 0, canImg.width, canImg.height);
+        // }
+        for (let i = 0; i < itemPositions.length; i++) {
+            if (itemPositions[i].type === 'canFood') {
+                image(canImg, itemPositions[i].x, itemPositions[i].y, this.canWidth, this.canHeight, 0, 0, canImg.width, canImg.height);
+            }
         }
     }
 }

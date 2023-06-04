@@ -17,19 +17,31 @@ class Cucumber {
                 // rockType[i][j] = random(rockTypes);
                 this.offsetX[i][j] = int(random(-200,200)) + 60 //+ this.densityX;
                 this.offsetY[i][j] = int(random(-200,200)) + 70 //+ this.densityY;
-                cucumberPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.cucumberWidth, height: this.cucumberHeight})
+                itemPositions.push({
+                    type: 'cucumber',
+                    x: i + this.offsetX[i][j],
+                    y: j + this.offsetY[i][j],
+                    width: this.cucumberWidth,
+                    height: this.cucumberHeight
+                });
+                // cucumberPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.cucumberWidth, height: this.cucumberHeight})
             }
           }
     }
 
     show() {
-        for (let i = 0; i < cucumberPositions.length; i++) {
-            // let food_x = cucumberPositions[i].x;
-            // let food_y = cucumberPositions[i].y;
-            // if(food_x<300 && food_y<tape1.height && food_y>worldHeight-tape2.height-this.cucumberHeight-100){
-            //     continue;
-            // }
-            image(cucumberImg, cucumberPositions[i].x, cucumberPositions[i].y, cucumberPositions[i].width, cucumberPositions[i].height, 0, 0, cucumberImg.width, cucumberImg.height);
+        // for (let i = 0; i < cucumberPositions.length; i++) {
+        //     // let food_x = cucumberPositions[i].x;
+        //     // let food_y = cucumberPositions[i].y;
+        //     // if(food_x<300 && food_y<tape1.height && food_y>worldHeight-tape2.height-this.cucumberHeight-100){
+        //     //     continue;
+        //     // }
+        //     image(cucumberImg, cucumberPositions[i].x, cucumberPositions[i].y, cucumberPositions[i].width, cucumberPositions[i].height, 0, 0, cucumberImg.width, cucumberImg.height);
+        // }
+        for (let i = 0; i < itemPositions.length; i++) {
+            if (itemPositions[i].type === 'cucumber') {
+                image(cucumberImg, itemPositions[i].x, itemPositions[i].y, itemPositions[i].width, itemPositions[i].height, 0, 0, cucumberImg.width, cucumberImg.height);
+            }
         }
     }
 }

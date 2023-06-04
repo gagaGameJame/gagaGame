@@ -45,9 +45,8 @@ class Cat {
             max: this.catTop + this.catHeight - adjustCatHeight
         }
 
-        // eat can and become larger
-        this.checkEatFood();
-        this.checkTouchBox();
+        this.checkItem();
+
         if(isPaused){
             image(catInBoxImg, this.stuckBox.x, this.stuckBox.y + 50, catInBoxImg.width * 0.7, catInBoxImg.height * 0.7, 0, 0, catImg.width, catImg.width);
             this.showBoxTime(this.stuckBox,this.boxLeftTime);
@@ -57,48 +56,49 @@ class Cat {
 
     }
 
-    checkEatFood(){
+    checkEatFood(itemPosition){
         let adjustSize = 0;
         if(isPaused){
             return;
         }
-        for (let i = 0; i < canFoodPositions.length; i++) {
-            const distance = calculateDis(cat_x, cat_y, canFoodPositions[i])
-            if (distance < this.collisionDisFood) {
+        const distance = calculateDis(cat_x, cat_y, itemPosition)
+        if (distance < this.collisionDisFood) {
+            if(itemPosition.type === 'canFood') {
                 catEatSound1.play()
-                adjustSize += 40
-                eatPositions.push({type: 'canFood', x: canFoodPositions[i].x, y: canFoodPositions[i].y})
-                canFoodPositions[i].x = -1000
-                canFoodPositions[i].y = -1000
+                adjustSize += 40;
                 score += 10;
-            }
-        }
-
-        // eat cucumber and become smaller
-        for (let i = 0; i < cucumberPositions.length; i++) {
-            const distance = calculateDis(cat_x, cat_y, cucumberPositions[i])
-            if (distance < this.collisionDisFood ) {
+            } else {
                 catEatSound2.play()
-                adjustSize -= 20
-                eatPositions.push({type: 'cucumber',x: cucumberPositions[i].x, y: cucumberPositions[i].y})
-                cucumberPositions[i].x = -1000
-                cucumberPositions[i].y = -1000
+                adjustSize += -20;
                 score += 5;
             }
+
+            eatPositions.push({type: itemPosition.type, x: itemPosition.x, y: itemPosition.y})
+            itemPosition.x = -1000
+            itemPosition.y = -1000
         }
 
         this.catWidth = this.catWidth + adjustSize // constrain(this.catWidth + this.adjustSize, 40, 160);
         this.catHeight = this.catHeight + adjustSize //constrain(this.catHeight + this.adjustSize, 40, 160);
     }
-    checkTouchBox() {
-        for (let i = 0; i < boxPositions.length; i++) {
-            let box = boxPositions[i];
-            const distance = calculateDis(cat_x,cat_y,boxPositions[i]);
-            if (distance < this.collisionDisBox && !box.hasChecked && this.catWidth < box.width * 0.7  &&!isPaused) {
-                boxPositions[i].hasChecked = true;
-                boxSound.play();
-                this.stuckBox = {x:box.x, y:box.y, width:box.width,height:box.height};
-                this.pause(boxPositions[i]);
+
+    checkTouchBox(boxPosition) {
+        let box = boxPosition;
+        const distance = calculateDis(cat_x,cat_y,boxPosition);
+        if (distance < this.collisionDisBox && !box.hasChecked && this.catWidth < box.width * 0.7  &&!isPaused) {
+            boxPosition.hasChecked = true;
+            boxSound.play();
+            this.stuckBox = boxPosition;
+            this.pause(boxPosition);
+        }
+    }
+
+    checkItem() {
+        for (let i = 0; i < itemPositions.length; i++) {
+            if(itemPositions[i].type === 'paperBox'){
+                this.checkTouchBox(itemPositions[i])
+            } else  {
+                this.checkEatFood(itemPositions[i])
             }
         }
     }
@@ -121,6 +121,7 @@ class Cat {
             catMove_y = CAT_SPEED_Y;
             isPaused = false;
             boxSound.stop();
+            // todo: update box image
         },3000);
     }
 

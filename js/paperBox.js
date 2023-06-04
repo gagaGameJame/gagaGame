@@ -20,7 +20,16 @@ class PaperBox {
                 const box_x = i + this.offsetX[i][j];
                 const box_y = j +  this.offsetY[i][j];
                 if(box_x >= 200 && box_y >= tape1.height && box_y <= worldHeight - tape2.height - this.boxHeight){
-                    boxPositions.push({x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.boxWidth, height: this.boxHeight, hasChecked: false});
+                    itemPositions.push({
+                        type: 'paperBox',
+                        image: boxImg,
+                        x: i + this.offsetX[i][j],
+                        y: j + this.offsetY[i][j],
+                        width: this.boxWidth,
+                        height: this.boxHeight,
+                        hasChecked: false
+                    });
+                    // boxPositions.push({x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.boxWidth, height: this.boxHeight, hasChecked: false});
                 }
             }
         }
@@ -42,9 +51,10 @@ class PaperBox {
         //         image(boxImg, box_x, box_y, this.boxWidth, this.boxHeight, 0, 0, this.boxWidth, this.boxHeight);
         //     }
         // }
-        for (let i = 0; i < boxPositions.length; i++) {
-            image(boxImg, boxPositions[i].x, boxPositions[i].y, this.boxWidth, this.boxHeight, 0, 0, boxImg.width, boxImg.height);
-
+        for (let i = 0; i < itemPositions.length; i++) {
+            if (itemPositions[i].type === 'paperBox') {
+                image(itemPositions[i].image, itemPositions[i].x, itemPositions[i].y, this.boxWidth, this.boxHeight, 0, 0, boxImg.width, boxImg.height);
+            }
         }
     }
 

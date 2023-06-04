@@ -58,12 +58,9 @@ let catImg, canImg, cucumberImg, boxImg, tvImg, winImg, catInBoxImg;
 let startGameImg, titleImg, titleBGImg;
 let cameraX = 0;
 let cat_x = 0, cat_y = 0;
-const canFoodPositions = [];
-const cucumberPositions = [];
 const eatPositions = [];
 let outSideCarpet = false;
 let carpetTop, carpetEnd;
-let boxPositions = [];
 let rate = 0.2;
 let isPaused = false;
 const CAT_SPEED_X = 2;
@@ -73,6 +70,7 @@ let catMove_y = CAT_SPEED_Y;
 let startTime;
 let leftTime;
 let gameStatus = 'Wait';
+const itemPositions = [];
 
 function preload() {
 
