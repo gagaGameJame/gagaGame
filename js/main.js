@@ -6,9 +6,8 @@ let scene1, scene2, winState, scene3;
 let gameoverState = false;
 let sceneCounter = 0;
 let intro, introText;
-let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat, cucumber;
+let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat, cucumber,box;
 let bgImg;
-let moveX = 2; // camera and cat move distance per drawing
 let moveY = 0;
 let camX = 0;
 let camY = 0;
@@ -40,7 +39,7 @@ let tilesList1;
 let threshold = 0.4;
 let blendThreshold = 0.05;
 let darkest = 200;
-let bgmSound, catEatSound1, catEatSound2, scoreSound, winSound, gameoverSound, birdsSound;
+let bgmSound, catEatSound1, catEatSound2, scoreSound, winSound, gameoverSound, birdsSound,boxSound;
 let sampleIsLooping = false;
 let winIsLooping = false;
 let birdsIsLooping = false;
@@ -55,7 +54,7 @@ let karla, karlaBold;
 let mult = 0.25;
 let isSoundOn = false;
 let rug, tape1, tape2;
-let catImg, canImg, cucumberImg;
+let catImg, canImg, cucumberImg, boxImg;
 let startGameImg, titleImg, titleBGImg;
 let cameraX = 0;
 let cat_x = 0, cat_y = 0;
@@ -64,12 +63,20 @@ const cucumberPositions = [];
 const eatPositions = [];
 let outSideCarpet = false;
 let carpetTop, carpetEnd;
+let boxPositions = [];
+let rate = 0.2;
+let isPaused = false;
+const CAT_SPEED_X = 2;
+const CAT_SPEED_Y = 5;
+let catMove_x = CAT_SPEED_X; // camera and cat move distance per drawing
+let catMove_y = CAT_SPEED_Y;
 
 function preload() {
 
   bgmSound = loadSound('data/bgm.mp3');
   catEatSound1 = loadSound('data/catEatSFX1.mp3')
   catEatSound2 = loadSound('data/catEatSFX2.mp3')
+  boxSound = loadSound('data/catBoxSFX.mp3');
   scoreSound = loadSound('data/score.wav');
   winSound = loadSound('data/win.wav');
   gameoverSound = loadSound('data/gameover.wav');
@@ -89,6 +96,7 @@ function preload() {
 
   canImg = loadImage('data/can.png')
   cucumberImg = loadImage('data/cucumber.png')
+  boxImg = loadImage('data/CardboardBox.png');
 }
 
 function setup() {
@@ -109,10 +117,8 @@ function keyReleased() {
   if (keyCode === 27) {
     sceneCounter = 0;
     cat.reset()
-    // catWidth = 100;
-    // catHeight = 100;
-    // catLeft = 0;
-    // catTop = tileHeight/2 - catHeight/2;;
+    cameraX = 0;
+    scene2 = new Scene2();
     bgmEnd()
   }
 
@@ -192,7 +198,8 @@ class Scene2 {
     margin = width * 0.15;
     winState = new WinState();
     canFood = new CanFood(0.8);
-    cat = new Cat(0.7);
+    cat = new Cat(0.5);
+    box = new PaperBox(rate);
     cucumber = new Cucumber(0.7);
   }
 
@@ -207,9 +214,10 @@ class Scene2 {
     noSmooth();
     pop();
 
-    cat.show(moveX);
+    cat.show();
     canFood.show();
     cucumber.show();
+    box.show();
   }
 }
 
@@ -340,7 +348,7 @@ function togglePlaying() {
 
 // Click to move around the map
 function moveCamera() {
-  cameraX = cameraX - moveX;
+  cameraX = cameraX - catMove_x;
   translate(cameraX,0);
 }
 
