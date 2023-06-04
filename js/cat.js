@@ -56,7 +56,7 @@ class Cat {
     }
 
     checkEatFood(itemPosition){
-        let adjustSize = 0;
+        let adjustSize = 1;
         if(isPaused){
             return;
         }
@@ -64,11 +64,11 @@ class Cat {
         if (distance < this.collisionDisFood) {
             if(itemPosition.type === 'canFood') {
                 catEatSound1.play()
-                adjustSize += 40;
+                adjustSize += 0.2;
                 score += 10;
             } else {
                 catEatSound2.play()
-                adjustSize += -20;
+                adjustSize += -0.1;
                 score += 5;
             }
 
@@ -76,9 +76,8 @@ class Cat {
             itemPosition.x = -1000
             itemPosition.y = -1000
         }
-
-        this.catWidth = this.catWidth + adjustSize // constrain(this.catWidth + this.adjustSize, 40, 160);
-        this.catHeight = this.catHeight + adjustSize //constrain(this.catHeight + this.adjustSize, 40, 160);
+        this.catWidth = this.catWidth * adjustSize // constrain(this.catWidth + this.adjustSize, 40, 160);
+        this.catHeight = this.catHeight * adjustSize //constrain(this.catHeight + this.adjustSize, 40, 160);
     }
 
     checkTouchBox(boxPosition) {

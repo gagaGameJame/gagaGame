@@ -1,5 +1,5 @@
 class PaperBox {
-    constructor(rate) {
+    constructor(rate, scaleRate = 1) {
         this.x;
         this.y;
         this.densityX = 5000 * rate//tileWidth * 1.5;
@@ -8,6 +8,7 @@ class PaperBox {
         this.offsetY = [];
         this.boxWidth = 300;
         this.boxHeight = 300;
+        this.scaleRate = scaleRate;
         this.remainTime;
 
         for(let i = 0; i < worldWidth; i += this.densityX) {
@@ -37,7 +38,9 @@ class PaperBox {
     show() {
         for (let i = 0; i < itemPositions.length; i++) {
             if (itemPositions[i].type === 'paperBox') {
-                image(itemPositions[i].image, itemPositions[i].x, itemPositions[i].y, this.boxWidth, this.boxHeight, 0, 0, boxImg.width, boxImg.height);
+                image(itemPositions[i].image, itemPositions[i].x, itemPositions[i].y,
+                  itemPositions[i].image.width * this.scaleRate, itemPositions[i].image.height * this.scaleRate,
+                  0, 0, itemPositions[i].image.width, itemPositions[i].image.height);
             }
         }
     }
