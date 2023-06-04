@@ -5,6 +5,8 @@ class Cat {
         this.catHeight = catImg.height * scaleRate;
         this.catLeft = 200;
         this.catTop = tileHeight / 2 - this.catHeight / 2;
+        this.collisionDisFood = 50 //this.catHeight * 0.2
+        this.collisionDisBox = 50;
     }
 
     show() {
@@ -28,14 +30,17 @@ class Cat {
             return;
         }
 
+        let adjustCatWidth = this.catWidth * 0.2;
+        let adjustCatHeight = this.catHeight * 0.2;
+
         cat_x = {
-            min:this.catLeft ,
-            max:this.catLeft + this.catWidth,
+            min:this.catLeft + adjustCatWidth,
+            max:this.catLeft + this.catWidth - adjustCatWidth
         }
 
         cat_y = {
-            min: this.catTop,
-            max: this.catTop + this.catHeight
+            min: this.catTop + adjustCatHeight,
+            max: this.catTop + this.catHeight - adjustCatHeight
         }
 
         // eat can and become larger
@@ -48,13 +53,13 @@ class Cat {
 
     checkEatFood(){
         let adjustSize = 0;
-        const collisionDis = 50 //this.catHeight * 0.2
+        // const collisionDis = 30 //this.catHeight * 0.2
         if(isPaused){
             return;
         }
         for (let i = 0; i < canFoodPositions.length; i++) {
-            const distance = calculateFoodDis(cat_x, cat_y, canFoodPositions[i])
-            if (distance < collisionDis) {
+            const distance = calculateDis(cat_x, cat_y, canFoodPositions[i])
+            if (distance < this.collisionDisFood) {
                 catEatSound1.play()
                 adjustSize += 40
                 eatPositions.push({type: 'canFood', x: canFoodPositions[i].x, y: canFoodPositions[i].y})
@@ -66,8 +71,8 @@ class Cat {
 
         // eat cucumber and become smaller
         for (let i = 0; i < cucumberPositions.length; i++) {
-            const distance = calculateFoodDis(cat_x, cat_y, cucumberPositions[i])
-            if (distance < collisionDis ) {
+            const distance = calculateDis(cat_x, cat_y, cucumberPositions[i])
+            if (distance < this.collisionDisFood ) {
                 catEatSound2.play()
                 adjustSize -= 20
                 eatPositions.push({type: 'cucumber',x: cucumberPositions[i].x, y: cucumberPositions[i].y})
@@ -84,8 +89,8 @@ class Cat {
         for (let i = 0; i < boxPositions.length; i++) {
             let box = boxPositions[i];
             // const distance = dist(cat_x + this.catWidth/2, cat_y, box.x, box.y);
-            const distance = calculateFoodDis(cat_x,cat_y,boxPositions[i]);
-            if (distance < 50 && !box.hasChecked && this.catWidth < box.width &&!isPaused) {
+            const distance = calculateDis(cat_x,cat_y,boxPositions[i]);
+            if (distance < this.collisionDisBox && !box.hasChecked && this.catWidth < box.width &&!isPaused) {
                 boxPositions[i].hasChecked = true;
                 boxSound.play();
                 // boxes.showTime({x:this.catLeft,y:this.catTop});
@@ -116,17 +121,21 @@ class Cat {
     }
 }
 
-function calculateFoodDis(cat_x, cat_y, position) {
+function calculateDis(cat_x, cat_y, position ) {
+    let adjustWidth = position.width * 0.3
+    let adjustHeight = position.height * 0.3
+    let foodOrBox_x = {min: position.x + adjustWidth, max: position.x + position.width - adjustWidth};
+    let foodOrBox_y = {min: position.y + adjustHeight, max: position.y + position.height - adjustHeight};
     const distance = []
-    distance.push(dist(cat_x.max, cat_y.min, position.x, position.y))
-    distance.push(dist(cat_x.max, cat_y.min, position.x, position.y + position.height))
-    distance.push(dist(cat_x.max, cat_y.min, position.x + position.width, position.y))
-    distance.push(dist(cat_x.max, cat_y.min, position.x + position.width, position.y + position.height))
+    distance.push(dist(cat_x.max, cat_y.min, foodOrBox_x.min, foodOrBox_y.min))
+    distance.push(dist(cat_x.max, cat_y.min, foodOrBox_x.min, foodOrBox_y.max))
+    distance.push(dist(cat_x.max, cat_y.min, foodOrBox_x.max, foodOrBox_y.min))
+    distance.push(dist(cat_x.max, cat_y.min, foodOrBox_x.max, foodOrBox_y.max))
 
-    distance.push(dist(cat_x.max, cat_y.max, position.x, position.y))
-    distance.push(dist(cat_x.max, cat_y.max, position.x, position.y + position.height))
-    distance.push(dist(cat_x.max, cat_y.max, position.x + position.width, position.y))
-    distance.push(dist(cat_x.max, cat_y.max, position.x + position.width, position.y + position.height))
+    distance.push(dist(cat_x.max, cat_y.max, foodOrBox_x.min, foodOrBox_y.min))
+    distance.push(dist(cat_x.max, cat_y.max, foodOrBox_x.min, foodOrBox_y.max))
+    distance.push(dist(cat_x.max, cat_y.max, foodOrBox_x.max, foodOrBox_y.min))
+    distance.push(dist(cat_x.max, cat_y.max, foodOrBox_x.max, foodOrBox_y.max))
 
     return min(distance)
 }
