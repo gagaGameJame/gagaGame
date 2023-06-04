@@ -1,11 +1,13 @@
 class CanFood {
-    constructor(rate) {
+    constructor(rate, scaleRate = 0.5) {
         this.x;
         this.y;
         this.densityX = 1000 * rate//tileWidth * 1.5;
         this.densityY = 1000 * rate//tileHeight * 1.5;
         this.offsetX = [];
         this.offsetY = [];
+        this.canWidth = canImg.width * scaleRate
+        this.canHeight = canImg.height * scaleRate
 
         for(let i = 0; i < worldWidth; i += this.densityX) {
             // rockType[i] = [];
@@ -15,17 +17,14 @@ class CanFood {
                 // rockType[i][j] = random(rockTypes);
                 this.offsetX[i][j] = int(random(-200,200)) + 60 //+ this.densityX;
                 this.offsetY[i][j] = int(random(-200,200)) + 70 //+ this.densityY;
-                canFoodPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j]})
+                canFoodPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j], width: this.canWidth, height:this.canHeight})
             }
           }
     }
 
     show() {
-        const canWidth = canImg.width
-        const canHeight = canImg.height
-        const canScaleSize = 0.2
         for (let i = 0; i < canFoodPositions.length; i++) {
-            image(canImg, canFoodPositions[i].x, canFoodPositions[i].y, canWidth * canScaleSize, canHeight * canScaleSize, 0, 0, canWidth, canHeight);
+            image(canImg, canFoodPositions[i].x, canFoodPositions[i].y, this.canWidth, this.canHeight, 0, 0, canImg.width, canImg.height);
         }
     }
 }

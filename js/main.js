@@ -62,6 +62,8 @@ let cat_x = 0, cat_y = 0;
 const canFoodPositions = [];
 const cucumberPositions = [];
 const eatPositions = [];
+let outSideCarpet = false;
+let carpetTop, carpetEnd;
 
 function preload() {
 
@@ -106,6 +108,7 @@ function keyReleased() {
   // press esc to exit
   if (keyCode === 27) {
     sceneCounter = 0;
+    cat.reset()
     // catWidth = 100;
     // catHeight = 100;
     // catLeft = 0;
@@ -141,6 +144,8 @@ function setupBackGround() {
     image(tape1, i * tapeWidth, 0, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
     image(tape2, i * tapeWidth, margin + rugHeight, tapeWidth, tapeHeight, 0, 0, tapeWidth, rugImgHeight);
   }
+  carpetTop = margin;
+  carpetEnd = margin + rugHeight;
 }
 
 function draw() {
@@ -186,13 +191,14 @@ class Scene2 {
   constructor() {
     margin = width * 0.15;
     winState = new WinState();
-    canFood = new CanFood(0.6);
-    cat = new Cat();
+    canFood = new CanFood(0.8);
+    cat = new Cat(0.7);
     cucumber = new Cucumber(0.7);
   }
 
   show() {
     clear();
+    background(0);
     moveCamera();
     setupBackGround()
     noStroke();
@@ -211,25 +217,10 @@ class Scene2 {
 class Scene3 {
   constructor() {
     cursor(ARROW);
-    margin = width * 0.15;
-    ground = new Ground();
-    hole = new Hole();
-    grass = new Grass();
-    trees = new Trees();
-    rocks = new Rocks();
-    rain = new Rain();
-    ripples = new Ripples();
   }
 
   show() {
     background(0, 100);
-    ground.show();
-    hole.show();
-    rocks.show();
-    grass.show();
-    ripples.show();
-    trees.show();
-    rain.show();
     push();
     imageMode(CENTER)
     pop();
@@ -241,11 +232,6 @@ class Scene3 {
     textFont(karlaBold);
     text("Game Over", width / 2, height / 2 - 100);
     pop();
-
-    if (!gameoverSoundIsLooping) {
-      gameoverSound.play();
-      gameoverSoundIsLooping = true;
-    }
   }
 }
 
