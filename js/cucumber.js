@@ -1,4 +1,4 @@
-class CanFood {
+class Cucumber {
     constructor(rate) {
         this.x;
         this.y;
@@ -15,17 +15,17 @@ class CanFood {
                 // rockType[i][j] = random(rockTypes);
                 this.offsetX[i][j] = int(random(-200,200)) + 60 //+ this.densityX;
                 this.offsetY[i][j] = int(random(-200,200)) + 70 //+ this.densityY;
-                canFoodPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j]})
+                cucumberPositions.push({ x: i + this.offsetX[i][j], y: j + this.offsetY[i][j]})
             }
           }
     }
 
     show() {
-        const canWidth = canImg.width
-        const canHeight = canImg.height
-        const canScaleSize = 0.2
-        for (let i = 0; i < canFoodPositions.length; i++) {
-            image(canImg, canFoodPositions[i].x, canFoodPositions[i].y, canWidth * canScaleSize, canHeight * canScaleSize, 0, 0, canWidth, canHeight);
+        const cucumberWidth = cucumberImg.width
+        const cucumberHeight = cucumberImg.height
+        const cucumberScaleSize = 0.2
+        for (let i = 0; i < cucumberPositions.length; i++) {
+            image(cucumberImg, cucumberPositions[i].x, cucumberPositions[i].y, cucumberWidth * cucumberScaleSize, cucumberHeight * cucumberScaleSize, 0, 0, cucumberWidth, cucumberHeight);
         }
     }
 }

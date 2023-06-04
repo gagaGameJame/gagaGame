@@ -6,7 +6,7 @@ let scene1, scene2, winState, scene3;
 let gameoverState = false;
 let sceneCounter = 0;
 let intro, introText;
-let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat;
+let ground, grass, player, rain, rocks, identity, trees, birds, ripples, hole, canFood, cat, cucumber;
 let bgImg;
 let moveX = 2; // camera and cat move distance per drawing
 let moveY = 0;
@@ -54,14 +54,13 @@ let score = 0;
 let karla, karlaBold;
 let mult = 0.25;
 let isSoundOn = false;
-// let catImage;
-let rug;
-let tape1, tape2;
-let canFood1;
-let spikeCat
+let rug, tape1, tape2;
+let catImg, canImg, cucumberImg;
+let startGameImg, titleImg, titleBGImg;
 let cameraX = 0;
 let cat_x = 0, cat_y = 0;
 const canFoodPositions = [];
+const cucumberPositions = [];
 const eatPositions = [];
 
 function preload() {
@@ -76,11 +75,17 @@ function preload() {
   karla = loadFont('data/Karla-Regular.ttf');
   karlaBold = loadFont('data/Karla-Bold.ttf');
 
-  spikeCat = loadImage('data/cat.jpeg');
+  catImg = loadImage('data/cat1f.png');
+
   rug = loadImage('data/rug.png')
   tape1 = loadImage('data/tape1.png')
   tape2 = loadImage('data/tape2.png')
-  canFood1 = loadImage('data/canFood1.png')
+  startGameImg = loadImage('data/startGame.png')
+  titleImg =loadImage('data/title.png')
+  titleBGImg =loadImage('data/titleBG.png')
+
+  canImg = loadImage('data/can.png')
+  cucumberImg = loadImage('data/cucumber.png')
 }
 
 function setup() {
@@ -177,20 +182,10 @@ class Scene2 {
 
   constructor() {
     margin = width * 0.15;
-    ground = new Ground();
-    hole = new Hole();
-    grass = new Grass();
-    trees = new Trees();
-    rocks = new Rocks();
-    identity = new Identity();
-    player = new Player();
-    rain = new Rain();
-    ripples = new Ripples();
-    birds = new Birds();
     winState = new WinState();
-    hole = new Hole();
     canFood = new CanFood(0.6);
     cat = new Cat();
+    cucumber = new Cucumber(0.7);
   }
 
   show() {
@@ -205,6 +200,7 @@ class Scene2 {
 
     cat.show(moveX);
     canFood.show();
+    cucumber.show();
   }
 }
 
