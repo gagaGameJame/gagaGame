@@ -102,7 +102,7 @@ function preload() {
   cucumberImg = loadImage('data/cucumber.png')
   boxImg = loadImage('data/CardboardBox.png');
   tvImg = loadImage('data/TV.png');
-  winImg = loadImage('data/winBG.png')
+  winImg = loadImage('data/WinBG.png')
 }
 
 function setup() {
