@@ -43,8 +43,8 @@ let accSpeed = INIT_ACC_SPEED;
 
 function preload() {
 
-  bgmSound = loadSound('./data/bgm.mp3');
-  catEatSound1 = loadSound('/data/catEatSFX1.mp3')
+  bgmSound = loadSound('data/bgm.mp3');
+  catEatSound1 = loadSound('data/catEatSFX1.mp3')
   catEatSound2 = loadSound('data/catEatSFX2.mp3')
   boxSound = loadSound('data/catBoxSFX.mp3');
 
