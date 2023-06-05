@@ -18,7 +18,7 @@ let karla, karlaBold, arial;
 
 let isSoundOn = false;
 let rug, tape1, tape2;
-let catImg, canImg, cucumberImg, boxImg, tvImg, winImg, catInBoxImg;
+let cat1Img, cat2Img, canImg, cucumberImg, boxImg, tvImg, winImg, catInBoxImg;
 let startGameImg, titleImg, titleBGImg;
 let cameraX = 0;
 let cat_x = 0, cat_y = 0;
@@ -43,8 +43,8 @@ let accSpeed = INIT_ACC_SPEED;
 
 function preload() {
 
-  bgmSound = loadSound('data/bgm.mp3');
-  catEatSound1 = loadSound('data/catEatSFX1.mp3')
+  bgmSound = loadSound('./data/bgm.mp3');
+  catEatSound1 = loadSound('/data/catEatSFX1.mp3')
   catEatSound2 = loadSound('data/catEatSFX2.mp3')
   boxSound = loadSound('data/catBoxSFX.mp3');
 
@@ -52,7 +52,8 @@ function preload() {
   karlaBold = loadFont('data/Karla-Bold.ttf');
   arial = loadFont('data/arial.ttf');
 
-  catImg = loadImage('data/cat1f.png');
+  cat1Img = loadImage('data/cat1f.png');
+  cat2Img = loadImage('data/cat2f.png');
 
   rug = loadImage('data/rug.png')
   tape1 = loadImage('data/tape1.png')

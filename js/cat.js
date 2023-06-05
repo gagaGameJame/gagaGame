@@ -1,8 +1,8 @@
 class Cat {
     constructor(scaleRate) {
         this.scaleRate = scaleRate;
-        this.catWidth = catImg.width * scaleRate;
-        this.catHeight = catImg.height * scaleRate;
+        this.catWidth = cat1Img.width * scaleRate;
+        this.catHeight = cat1Img.height * scaleRate;
         this.catLeft = 200;
         this.catTop = tileHeight / 2 - this.catHeight / 2;
         this.collisionDisFood = this.catHeight / 2 ;//this.catHeight * 0.2
@@ -53,9 +53,20 @@ class Cat {
         if(isPaused){
             this.showBoxTime(this.stuckBox,this.boxLeftTime);
         } else {
-            image(catImg, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
+            this.drawCat()
+            
         }
 
+    }
+
+    drawCat() {
+        let isFirstCatImg = true
+        if (isFirstCatImg) {
+          image(cat1Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
+        } else {
+          image(cat2Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
+        }
+        isFirstCatImg = !isFirstCatImg
     }
 
     checkEatFood(itemPosition){
@@ -135,8 +146,8 @@ class Cat {
     }
 
     reset() {
-        this.catWidth = catImg.width * this.scaleRate;
-        this.catHeight = catImg.height * this.scaleRate;
+        this.catWidth = cat1Img.width * this.scaleRate;
+        this.catHeight = cat1Img.height * this.scaleRate;
         this.catLeft = 200;
         this.catTop = tileHeight / 2 - this.catHeight / 2;
     }
