@@ -216,7 +216,7 @@ class Scene3 {
     push();
     imageMode(CENTER)
     pop();
-    soundOn.position(width - 100, 40);
+    // soundOn.position(width - 100, 40);
     push();
     fill(255);
     textAlign(CENTER);
