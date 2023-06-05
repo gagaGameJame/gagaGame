@@ -10,6 +10,9 @@ class Cat {
         this.stuckBox;
         this.stuckTime = 3;
         this.boxLeftTime = this.stuckTime;
+        this.isFirstCatImg = true;
+        this.frameCount = 0;
+        this.catImg = cat1Img
     }
 
     show() {
@@ -59,13 +62,24 @@ class Cat {
     }
 
     drawCat() {
-        let isFirstCatImg = true
-        if (isFirstCatImg) {
+        const firstFrameCount = 9
+        const secondFrameCount = 14 + 9
+
+        if (this.isFirstCatImg && this.frameCount <= firstFrameCount) {
           image(cat1Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, cat1Img.width, cat1Img.width);
-        } else {
+          
+          if (this.frameCount === firstFrameCount) {
+            this.isFirstCatImg = false
+          }
+        } else if (!this.isFirstCatImg && this.frameCount <= secondFrameCount){
           image(cat2Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, cat1Img.width, cat1Img.width);
+          if (this.frameCount === secondFrameCount) {
+            this.frameCount = 0
+            this.isFirstCatImg = true
+          }
         }
-        isFirstCatImg = !isFirstCatImg
+        this.frameCount++
+
     }
 
     checkEatFood(itemPosition){
