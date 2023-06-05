@@ -15,8 +15,8 @@ class CanFood {
             this.offsetY[i] = [];
             for(let j = 0; j < worldHeight; j += this.densityY){
                 // rockType[i][j] = random(rockTypes);
-                this.offsetX[i][j] = int(random(-200,200)) + 60 //+ this.densityX;
-                this.offsetY[i][j] = int(random(-200,200)) + 70 //+ this.densityY;
+                this.offsetX[i][j] = int(random( - 500, 500)) + 60 //+ this.densityX;
+                this.offsetY[i][j] = int(random(0, document.body.clientHeight)) - 10 //+ 70 
                 itemPositions.push({
                     type: 'canFood',
                     x: i + this.offsetX[i][j],

@@ -15,8 +15,8 @@ class Cucumber {
             this.offsetY[i] = [];
             for(let j = 0; j < worldHeight; j += this.densityY){
                 // rockType[i][j] = random(rockTypes);
-                this.offsetX[i][j] = int(random(-200,200)) + 60 //+ this.densityX;
-                this.offsetY[i][j] = int(random(-200,200)) + 70 //+ this.densityY;
+                this.offsetX[i][j] = int(random(-400, 400)) + 70//i//this.densityX; //+ 60 //
+                this.offsetY[i][j] =  int(random(0, document.body.clientHeight)) //int(random(-200, 200)) + 200//this.densityY; //
                 itemPositions.push({
                     type: 'cucumber',
                     x: i + this.offsetX[i][j],

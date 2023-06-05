@@ -2,7 +2,7 @@ let scene1, scene2, scene3;
 let sceneCounter = 0;
 let canFood, cat, cucumber,boxes,tv;
 
-let mapSize = 25;
+let mapSize = 30;
 let tileWidth = 1280;
 let tileHeight = 720;
 let worldWidth = mapSize * tileWidth // mapSize * (tileWidth / 2);
@@ -174,10 +174,10 @@ class Scene2 {
 
   constructor() {
     margin = width * 0.15;
-    canFood = new CanFood(0.8);
+    canFood = new CanFood(0.6);
     cat = new Cat(0.5);
     boxes = new PaperBox(rate);
-    cucumber = new Cucumber(0.7);
+    cucumber = new Cucumber(0.6);
     tv = new Tv();
   }
 
