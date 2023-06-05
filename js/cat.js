@@ -140,7 +140,7 @@ class Cat {
         catMove_y = 0;
         isPaused = true;
         this.boxLeftTime = this.stuckTime;
-        // boxPosition.image = catInBoxImg
+        boxPosition.image = catInBoxImg
         for(let i = 1; i < this.stuckTime ; i++) {
             setTimeout(() => {
                 this.boxLeftTime = this.stuckTime - i;
