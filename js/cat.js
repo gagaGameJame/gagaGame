@@ -61,9 +61,9 @@ class Cat {
     drawCat() {
         let isFirstCatImg = true
         if (isFirstCatImg) {
-          image(cat1Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
+          image(cat1Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, cat1Img.width, cat1Img.width);
         } else {
-          image(cat2Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, catImg.width, catImg.width);
+          image(cat2Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, cat1Img.width, cat1Img.width);
         }
         isFirstCatImg = !isFirstCatImg
     }
@@ -90,8 +90,8 @@ class Cat {
             itemPosition.y = -1000
             catSpeed_x += 0.05;
         }
-        this.catWidth = constrain(this.catWidth * adjustSize,catImg.width *0.1, tileWidth); // constrain(this.catWidth + this.adjustSize, 40, 160);
-        this.catHeight = constrain(this.catHeight * adjustSize,catImg.height *0.1, tileHeight) //constrain(this.catHeight + this.adjustSize, 40, 160);
+        this.catWidth = constrain(this.catWidth * adjustSize,cat1Img.width *0.1, tileWidth); // constrain(this.catWidth + this.adjustSize, 40, 160);
+        this.catHeight = constrain(this.catHeight * adjustSize,cat1Img.height *0.1, tileHeight) //constrain(this.catHeight + this.adjustSize, 40, 160);
     }
 
     checkTouchBox(boxPosition) {
