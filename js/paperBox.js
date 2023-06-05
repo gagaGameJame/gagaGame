@@ -16,7 +16,7 @@ class PaperBox {
             this.offsetX[i] = [];
             this.offsetY[i] = [];
             for(let j = 0; j < worldHeight; j += this.densityY){
-                this.offsetX[i][j] = int(random(-200,200));
+                this.offsetX[i][j] = int(random(-2000,2000));
                 this.offsetY[i][j] = int(random(60, tileHeight - this.boxHeight - 150));
 
                 const box_x = i + this.offsetX[i][j];

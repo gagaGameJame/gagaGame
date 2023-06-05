@@ -56,7 +56,6 @@ class Cat {
             this.drawCat()
             
         }
-
     }
 
     drawCat() {
@@ -79,20 +78,20 @@ class Cat {
             if(itemPosition.type === 'canFood') {
                 catEatSound1.play()
                 adjustSize += 0.4;
-                score += 5;
+                score += 3;
             } else {
                 catEatSound2.play()
                 adjustSize += -0.2;
-                score += 2;
+                score += 1;
             }
 
             eatPositions.push({type: itemPosition.type, x: itemPosition.x, y: itemPosition.y})
             itemPosition.x = -1000
             itemPosition.y = -1000
-            catSpeed_x += 1;
+            catSpeed_x += 0.05;
         }
-        this.catWidth = constrain(this.catWidth * adjustSize,catImg.width *0.1, catImg.width * this.scaleRate); // constrain(this.catWidth + this.adjustSize, 40, 160);
-        this.catHeight = constrain(this.catHeight * adjustSize,catImg.height *0.1, catImg.height * this.scaleRate) //constrain(this.catHeight + this.adjustSize, 40, 160);
+        this.catWidth = constrain(this.catWidth * adjustSize,catImg.width *0.1, tileWidth); // constrain(this.catWidth + this.adjustSize, 40, 160);
+        this.catHeight = constrain(this.catHeight * adjustSize,catImg.height *0.1, tileHeight) //constrain(this.catHeight + this.adjustSize, 40, 160);
     }
 
     checkTouchBox(boxPosition) {
@@ -127,7 +126,7 @@ class Cat {
         catMove_y = 0;
         isPaused = true;
         this.boxLeftTime = this.stuckTime;
-        boxPosition.image = catInBoxImg
+        // boxPosition.image = catInBoxImg
         for(let i = 1; i < this.stuckTime ; i++) {
             setTimeout(() => {
                 this.boxLeftTime = this.stuckTime - i;
@@ -153,6 +152,9 @@ class Cat {
     }
 
     showBoxTime(box, boxLeftTime){
+        if(!box){
+            return;
+        }
         push();
         fill(255);
         textSize(40);
