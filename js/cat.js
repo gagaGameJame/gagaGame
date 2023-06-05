@@ -62,8 +62,8 @@ class Cat {
     }
 
     drawCat() {
-        const firstFrameCount = 9
-        const secondFrameCount = 14 + 9
+        const firstFrameCount = 20
+        const secondFrameCount = 20 + 20
 
         if (this.isFirstCatImg && this.frameCount <= firstFrameCount) {
           image(cat1Img, this.catLeft, this.catTop, this.catWidth, this.catHeight, 0, 0, cat1Img.width, cat1Img.width);
