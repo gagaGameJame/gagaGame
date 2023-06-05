@@ -238,10 +238,10 @@ function bgmStart() {
   bgmSound.loop();
   $("img[alt$='Sound on button']").remove()
   $("img[alt$='Sound off button']").remove()
-  soundOn = createImg("data/sound-on.png", "Sound on button", '', () => {
-    soundOn.size(50, AUTO);
-  });
-  soundOn.position(width - 100, 40);
+  // soundOn = createImg("data/sound-on.png", "Sound on button", '', () => {
+  //   soundOn.size(50, AUTO);
+  // });
+  // soundOn.position(width - 100, 40);
 }
 
 function  bgmEnd() {
@@ -249,10 +249,10 @@ function  bgmEnd() {
   bgmSound.pause();
   $("img[alt$='Sound on button']").remove()
   $("img[alt$='Sound off button']").remove()
-  soundOn = createImg("data/sound-off.png", "Sound off button", '', () => {
-    soundOn.size(50, AUTO);
-  });
-  soundOn.position(width - 100, 40);
+  // soundOn = createImg("data/sound-off.png", "Sound off button", '', () => {
+  //   soundOn.size(50, AUTO);
+  // });
+  // soundOn.position(width - 100, 40);
 }
 function togglePlaying() {
   if (isSoundOn) {
