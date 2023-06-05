@@ -172,7 +172,7 @@ class Cat {
         push();
         fill(255);
         textSize(40);
-        text(boxLeftTime + '\'\'',box.x+box.width/2,box.y+box.height/2.1);
+        text(boxLeftTime + '\'\'',box.x+box.width/3,box.y+box.height/2.1);
         pop();
     }
 }
