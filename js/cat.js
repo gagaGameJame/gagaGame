@@ -5,8 +5,8 @@ class Cat {
         this.catHeight = catImg.height * scaleRate;
         this.catLeft = 200;
         this.catTop = tileHeight / 2 - this.catHeight / 2;
-        this.collisionDisFood = 50 //this.catHeight * 0.2
-        this.collisionDisBox = 50;
+        this.collisionDisFood = this.catHeight / 2 ;//this.catHeight * 0.2
+        this.collisionDisBox = this.catHeight / 2;
         this.stuckBox;
         this.stuckTime = 3;
         this.boxLeftTime = this.stuckTime;
@@ -21,6 +21,9 @@ class Cat {
         if(keyIsDown(40)) {
             // press arrow down
             moveTop = catMove_y;
+        }
+        if(!isPaused) {
+            catMove_x = catSpeed_x;
         }
         this.catLeft += catMove_x;
         this.catTop += moveTop;
@@ -64,30 +67,37 @@ class Cat {
         if (distance < this.collisionDisFood) {
             if(itemPosition.type === 'canFood') {
                 catEatSound1.play()
-                adjustSize += 0.2;
-                score += 10;
+                adjustSize += 0.4;
+                score += 5;
             } else {
                 catEatSound2.play()
-                adjustSize += -0.1;
-                score += 5;
+                adjustSize += -0.2;
+                score += 2;
             }
 
             eatPositions.push({type: itemPosition.type, x: itemPosition.x, y: itemPosition.y})
             itemPosition.x = -1000
             itemPosition.y = -1000
+            catSpeed_x += 1;
         }
-        this.catWidth = this.catWidth * adjustSize // constrain(this.catWidth + this.adjustSize, 40, 160);
-        this.catHeight = this.catHeight * adjustSize //constrain(this.catHeight + this.adjustSize, 40, 160);
+        this.catWidth = constrain(this.catWidth * adjustSize,catImg.width *0.1, catImg.width * this.scaleRate); // constrain(this.catWidth + this.adjustSize, 40, 160);
+        this.catHeight = constrain(this.catHeight * adjustSize,catImg.height *0.1, catImg.height * this.scaleRate) //constrain(this.catHeight + this.adjustSize, 40, 160);
     }
 
     checkTouchBox(boxPosition) {
         let box = boxPosition;
         const distance = calculateDis(cat_x,cat_y,boxPosition);
-        if (distance < this.collisionDisBox && !box.hasChecked && this.catWidth < box.width * 0.7  &&!isPaused) {
+        if (distance < this.collisionDisBox && !box.hasChecked &&!isPaused) {
             boxPosition.hasChecked = true;
-            boxSound.play();
-            this.stuckBox = boxPosition;
-            this.pause(boxPosition);
+            if(this.catWidth < box.width * 0.7 ) {
+                boxSound.play();
+                this.stuckBox = boxPosition;
+                this.pause(boxPosition);
+            } else {
+                boxPosition.hasChecked = true;
+                boxPosition.x = -1000
+                boxPosition.y = -1000
+            }
         }
     }
 
@@ -114,8 +124,9 @@ class Cat {
         }
         setTimeout(()=>{
             // cameraX -= catMove;
-            catMove_x = CAT_SPEED_X;
-            catMove_y = CAT_SPEED_Y;
+            // catMove_x = CAT_SPEED_X;
+            catMove_x = catSpeed_x;
+            catMove_y = INIT_CAT_SPEED_Y;
             isPaused = false;
             boxSound.stop();
             boxPosition.x = -1000
@@ -143,7 +154,7 @@ function calculateDis(cat_x, cat_y, position ) {
     let adjustWidth = position.width * 0.3
     let adjustHeight = position.height * 0.3
     let foodOrBox_x = {min: position.x + adjustWidth, max: position.x + position.width - adjustWidth};
-    let foodOrBox_y = {min: position.y + adjustHeight, max: position.y + position.height - adjustHeight};
+    let foodOrBox_y = {min: position.y + adjustHeight, max: position.y + position.height - adjustHeight*1.5};
     const distance = []
     distance.push(dist(cat_x.max, cat_y.min, foodOrBox_x.min, foodOrBox_y.min))
     distance.push(dist(cat_x.max, cat_y.min, foodOrBox_x.min, foodOrBox_y.max))

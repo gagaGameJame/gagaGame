@@ -6,9 +6,10 @@ class PaperBox {
         this.densityY = 5000 * rate//tileHeight * 1.5;
         this.offsetX = [];
         this.offsetY = [];
-        this.boxWidth = 300;
-        this.boxHeight = 300;
-        this.scaleRate = scaleRate;
+        this.scaleRate = scaleRate * 0.7;
+        this.boxWidth = boxImg.width * scaleRate;
+        this.boxHeight = boxImg.height * scaleRate;
+
         this.remainTime;
 
         for(let i = 0; i < worldWidth; i += this.densityX) {

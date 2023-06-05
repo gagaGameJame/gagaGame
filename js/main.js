@@ -27,14 +27,19 @@ let outSideCarpet = false;
 let carpetTop, carpetEnd;
 let rate = 0.2;
 let isPaused = false;
-const CAT_SPEED_X = 2;
-const CAT_SPEED_Y = 5;
-let catMove_x = CAT_SPEED_X; // camera and cat move distance per drawing
-let catMove_y = CAT_SPEED_Y;
+// const CAT_SPEED_X = 2;
+const INIT_CAT_SPEED_X = 3;
+const INIT_CAT_SPEED_Y = 5;
+// let catMove_x = CAT_SPEED_X; // camera and cat move distance per drawing
+let catSpeed_x = INIT_CAT_SPEED_X;
+let catMove_x = catSpeed_x; // camera and cat move distance per drawing
+let catMove_y = INIT_CAT_SPEED_Y;
 let startTime;
 let leftTime;
 let gameStatus = 'Wait';
 const itemPositions = [];
+const INIT_ACC_SPEED = 0.01;
+let accSpeed = INIT_ACC_SPEED;
 
 function preload() {
 
@@ -90,6 +95,8 @@ function keyReleased() {
     bgmEnd();
     gameStatus = 'Wait';
     score = 0;
+    catSpeed_x = INIT_CAT_SPEED_X
+    accSpeed = INIT_ACC_SPEED;
   }
 
   // press a to toggle sound
@@ -188,6 +195,7 @@ class Scene2 {
     boxes.show();
     cat.show();
     tv.show();
+    accelerateCat();
     checkTimeUp();
     checkScore();
   }
@@ -273,4 +281,11 @@ function checkScore() {
     gameStatus = 'Win';
     sceneCounter = 2;
   }
+}
+
+function accelerateCat () {
+  if(leftTime % 2 === 0){
+    catSpeed_x += accSpeed;
+  }
+  catSpeed_x = constrain(catSpeed_x,INIT_CAT_SPEED_X,10);
 }
